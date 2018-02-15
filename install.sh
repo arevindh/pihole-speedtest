@@ -22,13 +22,11 @@ fi
 
 whiptail --title "Pihole Speedtest Mod" --msgbox "Instaling requiered pakages python-pip,speedtest-cli,sqlite3" 8 78
 
-exit 
-
-sudo apt install -y python-pip
+sudo apt install -y python-pip &> /dev/null
  
-sudo pip install -y speedtest-cli
+sudo pip install speedtest-cli &> /dev/null
  
-sudo apt install -y sqlite3
+sudo apt install -y sqlite3 &> /dev/null
 
 whiptail --title "Pihole Speedtest Mod" --msgbox "Please set your timezone once prompted" 8 78
 
@@ -36,7 +34,7 @@ sudo dpkg-reconfigure tzdata
 
 whiptail --title "Pihole Speedtest Mod" --msgbox "Get latest pakage from github" 8 78
 
-sudo su 
+sudo su
 
 cd /var/www/html
 

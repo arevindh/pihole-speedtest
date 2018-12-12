@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "This script is work under progress please use the  install instructions here https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod"
+exit
+
 command -v pihole >/dev/null 2>&1 || { whiptail --title "Install Failed" --msgbox  "No pihole install found. Aborting install"  8 78 >&2; exit;}
 
 #if (( $EUID != 0 )); then

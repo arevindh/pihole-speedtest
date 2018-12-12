@@ -1,8 +1,13 @@
 ## Updates
 
+
+**Dec 12th 2018**
+
+* Speedtest mod is up to date with Pi-hole v4.1
+
 **Aug 7th 2018**
 
-* Speedtest mod is uptodate with Pi-hole v4.0
+* Speedtest mod is up to date with Pi-hole v4.0
 * Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
 
 

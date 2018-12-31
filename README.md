@@ -1,5 +1,8 @@
 ## Updates
 
+**Dec 31st 2018**
+
+* Speedtest mod is up to date with Pi-hole v4.1.2
 
 **Dec 12th 2018**
 

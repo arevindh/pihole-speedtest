@@ -2,11 +2,11 @@
 
 **Mar 7 2019**
 
-Updated to Pi-hole core v4.2.2
+* Updated to Pi-hole core v4.2.2
 
 **Feb 14 2019**
 
-Updated to Pi-hole core v4.2.1
+* Updated to Pi-hole core v4.2.1
 
 **Dec 31st 2018**
 

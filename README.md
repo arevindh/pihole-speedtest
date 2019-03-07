@@ -1,5 +1,13 @@
 ## Updates
 
+**Mar 7 2019**
+
+Updated to Pi-hole core v4.2.2
+
+**Feb 14 2019**
+
+Updated to Pi-hole core v4.2.1
+
 **Dec 31st 2018**
 
 * Speedtest mod is up to date with Pi-hole v4.1.2

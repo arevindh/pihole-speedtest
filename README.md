@@ -1,5 +1,9 @@
 ## Updates
 
+**July 2 2019**
+
+* Updated to version v4.3.1
+
 **May 19 2019**
 
 * Updated to Pi-hole core, Web v4.3

@@ -2,7 +2,7 @@
 
 **Sept 19 2019**
 
-* Updated to version v4.3.1
+* Updated to version v4.3.2
 
 **July 2 2019**
 

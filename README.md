@@ -1,5 +1,9 @@
 ## Updates
 
+**Sept 19 2019**
+
+* Updated to version v4.3.1
+
 **July 2 2019**
 
 * Updated to version v4.3.1

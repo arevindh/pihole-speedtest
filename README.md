@@ -1,8 +1,12 @@
 ## Updates
 
+**Sept 24 2019**
+
+* Updated to admin version v4.3.2
+
 **Sept 19 2019**
 
-* Updated to version v4.3.2
+* Updated to core version v4.3.2
 
 **July 2 2019**
 

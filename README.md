@@ -1,3 +1,7 @@
+## Discord Server
+
+Join (https://discord.gg/NdkDUH)[https://discord.gg/NdkDUH]
+
 ## Updates
 
 **Sept 24 2019**

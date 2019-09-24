@@ -1,6 +1,6 @@
 ## Discord Server
 
-Join (https://discord.gg/NdkDUH)[https://discord.gg/NdkDUH]
+Join new discord server at [https://discord.gg/NdkDUH](https://discord.gg/NdkDUH)
 
 ## Updates
 

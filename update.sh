@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
-   exit 1
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
 fi
 
 whiptail --title "Pihole Speedtest Mod " --msgbox "Pihole Speedtest Mod Updater. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78

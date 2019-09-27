@@ -2,6 +2,10 @@
 
 Join new discord server at [https://discord.gg/NdkDUH](https://discord.gg/NdkDUH)
 
+[Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+
+[Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+
 ## Updates
 
 **Sept 24 2019**
@@ -57,9 +61,5 @@ What does this mod have in extra ?
 2. Custom speed test server selection.
 3. Detailed speedtest results page.
 4. Ability to schedule speedtest interval.
-
-[Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
-
-[Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 [Uninstall Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)

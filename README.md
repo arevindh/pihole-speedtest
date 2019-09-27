@@ -51,7 +51,7 @@ Join new discord server at [https://discord.gg/NdkDUH](https://discord.gg/NdkDUH
 
 So [project](https://blog.arevindh.com/2017/07/13/add-speedtest-to-pihole-webui/) is just another fun project integrating speedtest to PiHole Web UI.
 
-Note : It’s just a quick solution , nowhere near perfect . If you made it better please let me know [here](https://github.com/arevindh/AdminLTE/issues)
+Note : It’s just a quick solution , nowhere near perfect . If you made it better please let me know [here](https://github.com/arevindh/pihole-speedtest/issues)
 
 It will be using speedtest.net on background for testing. More frequent the speed tests more data will used.
 

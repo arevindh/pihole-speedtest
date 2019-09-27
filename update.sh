@@ -5,6 +5,13 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
+if (whiptail --title "Pihole Speedtest Mod Updater" --yesno "Proceed to update ?" 8 78)
+    then
+        echo "Proceeding with update"
+    else
+        exit 1;
+fi
+
 whiptail --title "Pihole Speedtest Mod " --msgbox "Pihole Speedtest Mod Updater. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78
 
 echo "Updating Pihole and Speedtest-mod"
@@ -26,7 +33,8 @@ pihole -up
 
 #Update lastest speedtest-mod
 cd /var/www/html
-mv admin admin_org
+rm -rf admin_bak
+mv admin admin_bak
 git clone https://github.com/TooManyEggrolls/AdminLTE admin
 
 #Update latest webpage.sh for speedtest-mod

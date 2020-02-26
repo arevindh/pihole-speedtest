@@ -8,6 +8,10 @@ Join new discord server at [https://discord.gg/NdkDUH](https://discord.gg/NdkDUH
 
 ## Updates
 
+**Feb 26 2020**
+
+* Updated to admin version v4.3.3
+
 **Sept 24 2019**
 
 * Updated to admin version v4.3.2

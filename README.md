@@ -1,6 +1,8 @@
-## Discord Server
+# buymeacoffee
 
-Join new discord server at [https://discord.gg/NdkDUH](https://discord.gg/NdkDUH)
+Buy me a ☕️ if you like my projects :)
+
+https://www.buymeacoffee.com/itsmesid
 
 [Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 

@@ -12,7 +12,7 @@ https://www.buymeacoffee.com/itsmesid
 
 **May 11 2020**
 
-* Update in progress, might take few days.
+* Update to 5.0 in progress, might take few days.
 
 **Feb 26 2020**
 

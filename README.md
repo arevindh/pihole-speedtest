@@ -1,4 +1,4 @@
-# buymeacoffee
+# By me a coffe 
 
 Buy me a ☕️ if you like my projects :)
 
@@ -9,6 +9,10 @@ https://www.buymeacoffee.com/itsmesid
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ## Updates
+
+**May 11 2020**
+
+* Update in progress, might take few days.
 
 **Feb 26 2020**
 

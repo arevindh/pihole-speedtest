@@ -31,6 +31,8 @@ sudo pip install speedtest-cli &> /dev/null
  
 sudo apt install -y sqlite3 &> /dev/null
 
+sudo apt install -y jq &> /dev/null
+
 whiptail --title "Pihole Speedtest Mod" --msgbox "Please set your timezone once prompted" 8 78
 
 sudo dpkg-reconfigure tzdata  

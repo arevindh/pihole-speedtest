@@ -5,6 +5,10 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
+sudo apt update
+
+sudo apt install jq -y
+
 whiptail --title "Pihole Speedtest Mod Updater" --msgbox "Pihole Speedtest Mod Updater. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78
 
 if (whiptail --title "Pihole Speedtest Mod Updater" --yesno "Proceed to update ?" 8 78)

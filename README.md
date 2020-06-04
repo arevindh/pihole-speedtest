@@ -76,7 +76,9 @@ What does this mod have in extra ?
 3. Detailed speedtest results page.
 4. Ability to schedule speedtest interval.
 
-## Inconsistency 
+## Use Official CLI Mode for best results.
+
+## Inconsistency for python Mode
 -------------
 
 This Project is based on speedtest-cli. The text below is from their repository [readme](https://github.com/sivel/speedtest-cli#inconsistency) file.

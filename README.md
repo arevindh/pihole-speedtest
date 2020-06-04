@@ -10,6 +10,10 @@ https://www.buymeacoffee.com/itsmesid
 
 ## Updates
 
+**June 4 2020**
+
+* Added Support for official Speedtest-cli (v5.0.2)
+
 **May 11 2020**
 
 * Updated to admin version v5.0

@@ -9,6 +9,9 @@ https://www.buymeacoffee.com/itsmesid
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ## Updates
+**July 29 2020**
+
+* New feature : Displays 0 for failed speedtests : [Show failed speedtests as 0?](https://github.com/arevindh/pihole-speedtest/issues/43)
 
 **July 20 2020**
 

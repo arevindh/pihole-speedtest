@@ -39,12 +39,12 @@ pihole -up
 cd /var/www/html
 rm -rf admin_bak
 mv admin admin_bak
-git clone https://github.com/TooManyEggrolls/AdminLTE admin
+git clone https://github.com/arevindh/AdminLTE admin
 
 #Update latest webpage.sh for speedtest-mod
 cd /opt/pihole/
 mv webpage.sh webpage.sh.org
-wget https://github.com/TooManyEggrolls/pi-hole/raw/master/advanced/Scripts/webpage.sh
+wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 #Update version info

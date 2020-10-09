@@ -10,6 +10,10 @@ https://www.buymeacoffee.com/itsmesid
 
 ## Updates
 
+**OCt 9 2020**
+
+* Fixed scheduler issues
+
 **Aug 13 2020**
 
 * Updated to pihole 5.1.1 (Web) & 5.1.2 (Core)

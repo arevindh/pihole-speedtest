@@ -9,6 +9,9 @@ https://www.buymeacoffee.com/itsmesid
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ## Updates
+**Dec 25 2020**
+
+* Updated to pihole V5.2.2
 
 **Dec 4 2020**
 

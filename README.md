@@ -10,9 +10,13 @@ https://www.buymeacoffee.com/itsmesid
 
 ## Updates
 
+**Jan 20 2021**
+
+* Updated to pihole 5.2.4 Core / 5.3.1 Web
+
 **Jan 18 2021**
 
-* Updated to pihole 5.2.3 Core /5.3 Web
+* Updated to pihole 5.2.3 Core / 5.3 Web
 
 **Dec 25 2020**
 

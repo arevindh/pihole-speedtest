@@ -15,19 +15,32 @@ whiptail --title "Pihole Speedtest Mod" --msgbox "Pihole Speedtest Mod installer
 
 if php -v | grep 'PHP 7' > /dev/null ; then 
 
-	whiptail --title "Pihole Speedtest Mod" --msgbox "PHP 7.x found. Installing php7.0-sqlite " 8 78
+	
 	sudo apt install php7.0-sqlite
 else
 	whiptail --title "Pihole Speedtest Mod" --msgbox "PHP 5.x found. Installing php5-sqlite" 8 78
 	sudo apt install php5-sqlite
 fi
  
+PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
+
+whiptail --title "Pihole Speedtest Mod" --msgbox "PHP $PHP_VERSION found. Installing $PHP_VERSION-sqlite3 " 8 78
+
+sudo apt install $PHP_VERSION-sqlite3
 
 whiptail --title "Pihole Speedtest Mod" --msgbox "Instaling requiered pakages python-pip,speedtest-cli,sqlite3" 8 78
 
-sudo apt install -y python-pip &> /dev/null
- 
-sudo pip install speedtest-cli &> /dev/null
+sudo apt-get install -y gnupg1 apt-transport-https dirmngr &> /dev/null
+
+export INSTALL_KEY=379CE192D401AB61 &> /dev/null
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $INSTALL_KEY &> /dev/null
+
+echo "deb https://ookla.bintray.com/debian generic main" | sudo tee  /etc/apt/sources.list.d/speedtest.list &> /dev/null
+
+sudo apt-get update &> /dev/null
+
+sudo apt-get install -y speedtest &> /dev/null
  
 sudo apt install -y sqlite3 &> /dev/null
 

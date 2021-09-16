@@ -12,6 +12,10 @@ Buy me a ☕️ if you like my projects :)
 
 ## Updates
 
+**Sept 16 2021**
+
+* Updated to pihole 5.4 Core / 5.6 Web, disabled python mode selection
+
 **April 15 2021**
 
 * Updated to pihole 5.3.1 Core / 5.5 Web

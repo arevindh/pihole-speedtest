@@ -14,7 +14,7 @@ Buy me a ☕️ if you like my projects :)
 
 **Dec 26 2021**
 
-* Updated to pihole 5.9 Core / 5.9 Web
+* Updated to pihole 5.7 Core / 5.9 Web
 
 **Oct 24 2021**
 

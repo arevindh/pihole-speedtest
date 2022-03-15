@@ -1,5 +1,7 @@
 # By me a coffe 
 
+[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Buy me a ☕️ if you like my projects :)
 
 

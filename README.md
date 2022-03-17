@@ -17,7 +17,7 @@ Buy me a ☕️ if you like my projects :)
 ## Updates
 
 
-**Feb 21 2022**
+**Mar 17 2022**
 
 Speedtest mod update fixed [AdminLTE/51](https://github.com/arevindh/AdminLTE/issues/51)
 

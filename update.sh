@@ -31,9 +31,6 @@ rm webpage.sh
 wget https://github.com/pi-hole/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
-rm version.sh
-https://raw.githubusercontent.com/arevindh/pi-hole/master/advanced/Scripts/version.sh
-chmod +x version.sh
 
 #Update Pihole
 pihole -up
@@ -49,6 +46,10 @@ cd /opt/pihole/
 mv webpage.sh webpage.sh.org
 wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
+
+rm version.sh
+https://raw.githubusercontent.com/arevindh/pi-hole/master/advanced/Scripts/version.sh
+chmod +x version.sh
 
 #Update version info
 pihole updatechecker local

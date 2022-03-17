@@ -1,9 +1,11 @@
-# By me a coffe 
+# Pihole Speedtest
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Buy me a ☕️ if you like my projects :)
 
+## By me a coffee 
+
+Buy me a ☕️ if you like my projects :)
 
 
 <a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
@@ -13,6 +15,11 @@ Buy me a ☕️ if you like my projects :)
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ## Updates
+
+
+**Feb 21 2022**
+
+Speedtest mod update fixed [AdminLTE/51](https://github.com/arevindh/AdminLTE/issues/51)
 
 **Feb 21 2022**
 

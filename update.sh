@@ -48,7 +48,7 @@ wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 rm version.sh
-https://raw.githubusercontent.com/arevindh/pi-hole/master/advanced/Scripts/version.sh
+wget https://raw.githubusercontent.com/arevindh/pi-hole/master/advanced/Scripts/version.sh
 chmod +x version.sh
 
 #Update version info

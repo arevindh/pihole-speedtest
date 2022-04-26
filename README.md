@@ -14,8 +14,11 @@ Buy me a ☕️ if you like my projects :)
 
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
-## Updates
+## Update
 
+**April 24 2022**
+
+Pihole uodate
 
 **Mar 17 2022**
 

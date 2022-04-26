@@ -18,7 +18,7 @@ Buy me a ☕️ if you like my projects :)
 
 **April 24 2022**
 
-Pihole uodate
+Pi-hole FTL v5.15, Web v5.12 and Core v5.10 
 
 **Mar 17 2022**
 

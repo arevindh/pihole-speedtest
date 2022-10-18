@@ -16,6 +16,10 @@ Buy me a ☕️ if you like my projects :)
 
 ## Update
 
+**Oct 8 2022**
+
+Pi-hole v5.13 FTL v5.18.2, Web v5.16 
+
 **Oct 1 2022**
 
 Pi-hole 5.12.2 FTL 5.18.1 Admin LTE 5.15.1 , Docker 2022.09.4

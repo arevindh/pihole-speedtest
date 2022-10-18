@@ -16,7 +16,7 @@ Buy me a ☕️ if you like my projects :)
 
 ## Update
 
-**Oct 8 2022**
+**Oct 18 2022**
 
 Pi-hole v5.13 FTL v5.18.2, Web v5.16 
 

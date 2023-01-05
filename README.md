@@ -16,6 +16,12 @@ Buy me a ☕️ if you like my projects :)
 
 ## Update
 
+**Jan 5 2023**  
+
+Wishing everyone a very happy New Year!
+
+Pi-hole 5.14.2 FTL 5.20, Web v5.18 
+
 **Nov 24 2022**
 
 Pi-hole 5.14.1 FTL 5.19.1, Web v5.17 

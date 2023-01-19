@@ -38,7 +38,8 @@ pihole -up
 #Update lastest speedtest-mod
 cd /var/www/html
 rm -rf admin_bak
-mv admin admin_bak
+rm -rf org_admin
+mv admin org_admin
 git clone https://github.com/arevindh/AdminLTE admin
 
 #Update latest webpage.sh for speedtest-mod

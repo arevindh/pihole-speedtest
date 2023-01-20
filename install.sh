@@ -45,6 +45,7 @@ sudo dpkg-reconfigure tzdata
 whiptail --title "Pihole Speedtest Mod" --msgbox "Get latest pakage from github" 8 78
 sudo su
 cd /var/www/html
+rm -rf org_admin
 mv admin org_admin
 git clone https://github.com/arevindh/AdminLTE admin
 cd admin
@@ -63,7 +64,7 @@ wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 mv version.sh version.sh.org
-wget https://raw.githubusercontent.com/arevindh/pi-hole/master/advanced/Scripts/version.sh
+wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/version.sh
 chmod +x version.sh
 
 #Update version info

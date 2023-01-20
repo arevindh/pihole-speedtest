@@ -9,12 +9,12 @@ rm -rf org_admin
 
 echo "Get original webpage.sh file from git"
 cd /opt/pihole/
-rm webpage.sh
+rm -f webpage.sh
 wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 echo "Get original version.sh file from git"
-rm version.sh
+rm -f version.sh
 wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x version.sh
 

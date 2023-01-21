@@ -8,13 +8,13 @@ fi
 if [ -n "$1" ]; then
     case "$1" in
         "in")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | tac | tac | sudo bash
+            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash
             ;;
         "up")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | tac | tac | sudo bash -s -- $2 d
+            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | sudo bash -s -- $2 d
             ;;
         "un")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | tac | tac | sudo bash -s -- d # detached, avoid whiptail
+            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- d # detached, avoid whiptail
             ;;
         *)
             # usage is up or un optionally followed by un or up
@@ -23,6 +23,9 @@ if [ -n "$1" ]; then
             ;;
     esac
     if [ $? -eq 0 ]; then
+        rm -rf /var/www/html/mod_admin
+        rm -f /opt/pihole/webpage.sh.mod
+        rm -f /opt/pihole/version.sh.mod
         exit 0
     fi
 

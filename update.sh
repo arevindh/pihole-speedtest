@@ -10,36 +10,35 @@ pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 if [[ ! "$pihole_current" < "$pihole_latest" ]] && [[ ! "$adminlte_current" < "$adminlte_latest" ]] && [[ ! "$pihole_ftl_current" < "$pihole_ftl_latest" ]] && [[ "$1" != "un" ]]; then
     echo "Pi-hole is already up to date"
+    exit 0
 fi
 
-curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | tac | tac | sudo bash -s -- d
-
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- d
 PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
 if [ "$1" == "un" ]; then
-    rm -rf /var/www/html/mod_admin
-    rm -f /opt/pihole/webpage.sh.mod
-    rm -f /opt/pihole/version.sh.mod
-    echo "Uninstall complete"
     exit 0
 fi
 
 echo "Updating Speedtest Mod..."
 
 cd /var/www/html
+git clone https://github.com/arevindh/AdminLTE new_admin
+cd /opt/pihole/
+wget -O webpage.sh.mod https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
+wget -O version.sh.mod https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/version.sh
+chmod +x webpage.sh.mod
+chmod +x version.sh.mod
+cp webpage.sh webpage.sh.org
+cp version.sh version.sh.org
+mv webpage.sh.mod webpage.sh
+mv version.sh.mod version.sh
+cd -
 rm -rf pihole_admin
 rm -rf admin_bak
 rm -rf org_admin
 mv admin org_admin
-git clone https://github.com/arevindh/AdminLTE admin
-
-cd /opt/pihole/
-mv webpage.sh webpage.sh.org
-mv version.sh version.sh.org
-wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
-wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/version.sh
-chmod +x webpage.sh
-chmod +x version.sh
+mv new_admin admin
 
 pihole updatechecker local
 

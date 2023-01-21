@@ -1,39 +1,28 @@
 #!/bin/bash
 
-# if run counter is > 3, then exit
-if [ ! -f /tmp/pimod.txt ]; then
-    echo 1 > /tmp/pimod.txt
-else
-    run_counter=$(cat /tmp/pimod.txt)
-    run_counter=$((run_counter + 1))
-    echo $run_counter > /tmp/pimod.txt
-fi
-
-if [ $run_counter -gt 3 ]; then
-    echo "Too many runs. Please run command again or try manually."
-    exit 1
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
 fi
 
 if [ -n "$1" ]; then
     case "$1" in
         "in")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | bash
+            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | tac | tac | sudo bash
             ;;
         "up")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | bash -s -- $2
+            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | tac | tac | sudo bash -s -- $2 d
             ;;
         "un")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | bash
+            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | tac | tac | sudo bash -s -- d # detached, avoid whiptail
             ;;
         *)
             # usage is up or un optionally followed by un or up
             echo "Usage: $0 [up [un]|un]"
-            rm -f /tmp/pimod.txt
             exit 1
             ;;
     esac
     if [ $? -eq 0 ]; then
-        rm -f /tmp/pimod.txt
         exit 0
     fi
 
@@ -52,10 +41,5 @@ if [ -n "$1" ]; then
             echo "Files restored."
         fi
     fi
-    whiptail --title "Pihole Speedtest Mod" --yesno "Would you like to try again?" 8 78
-    if [ $? -eq 0 ]; then
-        $0 $1 $2
-    fi
-    rm -f /tmp/pimod.txt
-    exit 1
+    echo "Please try again or try manually."
 fi

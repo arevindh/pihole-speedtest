@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ $EUID != 0 ]; then
     sudo "$0" "$@"
@@ -8,43 +8,38 @@ fi
 sudo apt update
 sudo apt install jq -y
 
-whiptail --title "Pi-hole Speedtest Mod Updater" --msgbox "Pi-hole Speedtest Mod Updater. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78
-if (whiptail --title "Pi-hole Speedtest Mod Updater" --yesno "Proceed to update ?" 8 78); then
-    echo "Proceeding with update"
-else
-    exit 1
+whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --msgbox "Update or Uninstall the Mod. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78
+uninstall=${1:-""}
+
+pihole_latest=$(curl -s https://api.github.com/repos/arevindh/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
+adminlte_latest=$(curl -s https://api.github.com/repos/arevindh/AdminLTE/releases/latest | grep tag_name | cut -d '"' -f 4)
+pihole_ftl_latest=$(curl -s https://api.github.com/repos/pi-hole/FTL/releases/latest | grep tag_name | cut -d '"' -f 4)
+
+pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
+adminlte_current=$(pihole -v | grep "Web" | cut -d ' ' -f 6)
+pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
+
+if [[ "$pihole_current" == "$pihole_latest" ]] && [[ "$adminlte_current" == "$adminlte_latest" ]] && [[ "$pihole_ftl_current" == "$pihole_ftl_latest" ]] && [[ "$uninstall" != "un" ]]; then
+    echo "Pi-hole is already up to date."
+    exit 0
 fi
 
-echo "Reverting files..."
-cd /var/www/html
-# if org_admin exists, mv it to admin, else clone admin from URL
-if [ -d /var/www/html/org_admin ]; then
-    rm -rf admin
-    mv org_admin admin
-else
-    rm -rf admin
-    git clone https://github.com/pi-hole/AdminLTE admin
+# if user does not want to proceed, exit
+if ! ( whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --yesno "Proceed?" 8 78); then
+    echo "Update cancelled."
+    exit 0
 fi
 
-cd /opt/pihole/
-if [ -f /opt/pihole/webpage.sh.org ]; then
-    mv webpage.sh.org webpage.sh
-else
-    wget https://github.com/pi-hole/pi-hole/raw/master/advanced/Scripts/webpage.sh
-    chmod +x webpage.sh
-fi
-if [ -f /opt/pihole/version.sh.org ]; then
-    mv version.sh.org version.sh
-else
-    wget https://github.com/pi-hole/pi-hole/raw/master/advanced/Scripts/version.sh
-    chmod +x version.sh
-fi
-echo "Files reverted."
+echo "Proceeding..."
+curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | bash
 
 pihole -up
 
-if [ -n "$1" ] && [ "$1" = "un" ]; then
-    echo "Speedtest Mod Uninstall Complete"
+if [ "$1" == "un" ]; then
+    rm -rf /var/www/html/mod_admin
+    rm -f /opt/pihole/webpage.sh.mod
+    rm -f /opt/pihole/version.sh.mod
+    whiptail --title "Pihole Speedtest Mod" --msgbox "Uninstall complete" 8 78
     exit 0
 fi
 

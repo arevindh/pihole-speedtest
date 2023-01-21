@@ -33,7 +33,7 @@ fi
 echo "Proceeding..."
 curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | bash
 
-pihole -up
+PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
 if [ "$1" == "un" ]; then
     rm -rf /var/www/html/mod_admin

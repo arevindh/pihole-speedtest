@@ -48,7 +48,7 @@ rm -rf org_admin
 mv admin org_admin
 mv new_admin admin
 
-if [ ! -f /etc/pihole/speedtest.db ] || [ $1 == "db" ]; then
+if [ ! -f /etc/pihole/speedtest.db ] || [ '$1' == "db" ]; then
 	echo "$(date) - Initializing database..."
 	if [ -f /etc/pihole/speedtest.db ]; then
 		mv /etc/pihole/speedtest.db speedtest.db.old

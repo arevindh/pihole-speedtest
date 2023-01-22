@@ -19,7 +19,7 @@ if [ "$1" == "up" ]; then
 fi
 
 PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-apt-get install $PHP_VERSION-sqlite3 jq -y
+apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
 apt-get remove speedtest-cli -y
 
 if [ ! -f /usr/bin/speedtest ]; then

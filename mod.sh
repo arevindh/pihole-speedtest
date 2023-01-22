@@ -1,48 +1,48 @@
 #!/bin/bash
+LOG_FILE="/var/log/pimod.log"
 
-if [ $EUID != 0 ]; then
-    sudo "$0" "$@"
-    exit $?
-fi
+help() {
+    echo "(Re)install Speedtest Mod."
+    echo "Usage: sudo $0 [up [un]|un] [db]"
+    echo "up - update Pi-hole too"
+    echo "un - only uninstall mod"
+    echo "db - flush database too"
+    exit 1
+}
 
-if [ -n "$1" ]; then
-    case "$1" in
-        "in")
-            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash
-            ;;
-        "up")
-            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | sudo bash -s -- $2 d
-            ;;
-        "un")
-            curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- d # detached, avoid whiptail
-            ;;
-        *)
-            # usage is up or un optionally followed by un or up
-            echo "Usage: $0 [up [un]|un]"
-            exit 1
-            ;;
-    esac
+mod() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        help
+    fi
+
+    if [ $EUID != 0 ]; then
+        sudo "$0" "$@"
+        exit $?
+    fi
+        
+    curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then
         rm -rf /var/www/html/mod_admin
         rm -f /opt/pihole/webpage.sh.mod
-        rm -f /opt/pihole/version.sh.mod
         exit 0
     fi
 
-    echo "Something went wrong."
+    echo "$(date) - Something went wrong." | sudo tee -a /var/log/pimod.log
     if [ "$1" == "up" ] || [ "$1" == "un" ]; then
-        if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ] || [ ! -f /opt/pihole/version.sh.mod ]; then
-            echo "Speedtest Mod is not backed up, did not restore automatically."
+        if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
+            echo "$(date) - Speedtest Mod is not backed up, did not restore automatically."
         else
-            echo "Restoring files..."
+            echo "$(date) - Restoring files..."
             cd /var/www/html
             rm -rf admin
             mv mod_admin admin
             cd /opt/pihole/
             mv webpage.sh.mod webpage.sh
-            mv version.sh.mod version.sh
-            echo "Files restored."
+            echo "$(date) - Files restored."
         fi
     fi
-    echo "Please try again or try manually."
-fi
+    echo "$(date) - Please try again or try manually."
+    exit 1
+}
+
+mod "$@" 2>&1 | sudo tee -- "$LOG_FILE"

@@ -50,7 +50,10 @@ mv new_admin admin
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ $1 == "db" ]; then
 	echo "$(date) - Initializing database..."
-	cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+	if [ -f /etc/pihole/speedtest.db ]; then
+		mv /etc/pihole/speedtest.db speedtest.db.old
+	fi
+    cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
 pihole updatechecker local

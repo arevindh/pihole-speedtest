@@ -28,8 +28,11 @@ fi
 mv org_admin admin
 
 if [ "$1" == "db" ]; then
-	echo "$(date) - Removing database..."
-	rm -f /etc/pihole/speedtest.db
+	echo "$(date) - Clearing history..."
+	if [ -f /etc/pihole/speedtest.db ]; then
+		mv /etc/pihole/speedtest.db speedtest.db.old
+	fi
+    cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
 echo "$(date) - Uninstall complete"

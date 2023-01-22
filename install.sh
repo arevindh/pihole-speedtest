@@ -5,7 +5,9 @@ if [ ! -f /usr/local/bin/pihole ]; then
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
 
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $3
+
+db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
 	exit 0
 fi

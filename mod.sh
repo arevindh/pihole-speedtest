@@ -4,9 +4,9 @@ LOG_FILE="/var/log/pimod.log"
 help() {
     echo "(Re)install Speedtest Mod."
     echo "Usage: sudo $0 [up [un]|un] [db]"
-    echo "up - update Pi-hole too"
-    echo "un - only uninstall mod"
-    echo "db - flush database too"
+    echo "up - update Pi-hole"
+    echo "un - only uninstall"
+    echo "db - flush database"
     exit 1
 }
 

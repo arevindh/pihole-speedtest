@@ -64,7 +64,7 @@ rm -rf new_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
-cp new_admin mod_admin
+cp -r new_admin mod_admin
 mv new_admin admin
 cd -
 cp pihole/webpage.sh.mod pihole/webpage.sh

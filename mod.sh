@@ -19,6 +19,8 @@ mod() {
         sudo "$0" "$@"
         exit $?
     fi
+
+    printf "Thanks for using Speedtest Mod!\n"
         
     curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then

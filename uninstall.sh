@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-echo "$(date) - Uninstalling Speedtest Mod..."
+echo "$(date) - Restoring Pi-hole..."
 
 cd /opt/
 if [ ! -f /opt/pihole/webpage.sh.org ]; then
@@ -27,14 +27,14 @@ if [ ! -d /var/www/html/org_admin ]; then
 fi
 
 if [ "$1" == "db" ]; then
-	echo "$(date) - Clearing history..."
+	echo "$(date) - Clearing History..."
 	if [ -f /etc/pihole/speedtest.db ]; then
 		mv /etc/pihole/speedtest.db speedtest.db.old
 	fi
     cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
-echo "$(date) - Restoring Pi-hole..."
+echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 if [ -d /var/www/html/admin ]; then
     rm -rf mod_admin
@@ -45,4 +45,4 @@ cd /opt/pihole/
 cp webpage.sh webpage.sh.mod
 mv webpage.sh.org webpage.sh
 
-echo "$(date) - Uninstall complete"
+echo "$(date) - Uninstall Complete"

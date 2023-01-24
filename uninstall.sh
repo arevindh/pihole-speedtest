@@ -5,10 +5,10 @@ echo "$(date) - Restoring Pi-hole..."
 cd /opt/
 if [ ! -f /opt/pihole/webpage.sh.org ]; then
     rm -rf org_pihole
-    git clone https://github.com/pi-hole/pi-hole org_pihole
+    git clone --depth=1 https://github.com/pi-hole/pi-hole org_pihole
     cd org_pihole
-    currVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
-    git checkout $currVer >/dev/null 2>&1
+    #currVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
+    git checkout master
     chmod +x advanced/Scripts/webpage.sh
     cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
     cd -
@@ -18,11 +18,10 @@ fi
 cd /var/www/html
 if [ ! -d /var/www/html/org_admin ]; then
     rm -rf org_admin
-    git clone https://github.com/pi-hole/AdminLTE org_admin
+    git clone --depth=1 https://github.com/pi-hole/AdminLTE org_admin
     cd org_admin
-    git fetch --tags
-    currVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
-    git checkout $currVer >/dev/null 2>&1
+    #currVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
+    git checkout master
     cd -
 fi
 

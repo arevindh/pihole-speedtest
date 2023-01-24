@@ -22,17 +22,17 @@ echo "$(date) - Downloading Latest Speedtest Mod..."
 
 cd /var/www/html
 rm -rf new_admin
-git clone https://github.com/arevindh/AdminLTE new_admin
+git clone --depth=1 https://github.com/arevindh/AdminLTE new_admin
 cd new_admin
-git fetch --tags
+git fetch --tags -q
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 git checkout $latestTag
 
 cd /opt/
 rm -rf new_pihole
-git clone https://github.com/arevindh/pi-hole new_pihole
+git clone --depth=1 -b ipitio https://github.com/arevindh/pi-hole new_pihole
 cd new_pihole
-git fetch --tags
+git fetch --tags -q
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 git checkout $latestTag
 chmod +x advanced/Scripts/webpage.sh

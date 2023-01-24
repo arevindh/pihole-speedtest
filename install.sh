@@ -1,10 +1,28 @@
 #!/bin/bash -e
 
+echo "$(date) - Installing Speedtest Mod..."
+
+cd /var/www/html
+rm -rf mod_admin
+git clone https://github.com/arevindh/AdminLTE mod_admin
+cd mod_admin
+git fetch --tags
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+git checkout $latestTag
+
+cd /opt/
+rm -rf mod_pihole
+git clone https://github.com/arevindh/pi-hole mod_pihole
+cd mod_pihole
+git fetch --tags
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+git checkout $latestTag
+chmod +x webpage.sh
+
 if [ ! -f /usr/local/bin/pihole ]; then
 	echo "$(date) - Installing Pi-hole..."
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
-
 
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $db
@@ -31,24 +49,17 @@ if [ ! -f /usr/bin/speedtest ]; then
 	sudo apt-get install speedtest -y
 fi
 
-echo "$(date) - Installing Speedtest Mod..."
+echo "$(date) - Modding Pi-hole..."
 
-cd /var/www/html
-rm -rf new_admin
-git clone https://github.com/arevindh/AdminLTE new_admin
 cd /opt/pihole/
-wget -O webpage.sh.mod https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
-chmod +x webpage.sh.mod
 cp webpage.sh webpage.sh.org
-mv webpage.sh.mod webpage.sh
-cd -
-rm -rf pihole_admin
-rm -rf admin_bak
+cp webpage.sh.mod webpage.sh
+cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
-mv new_admin admin
+cp -r mod_admin admin
 
-if [ ! -f /etc/pihole/speedtest.db ] || [ '$1' == "db" ]; then
+if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	echo "$(date) - Initializing database..."
 	if [ -f /etc/pihole/speedtest.db ]; then
 		mv /etc/pihole/speedtest.db speedtest.db.old

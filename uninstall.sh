@@ -29,7 +29,7 @@ fi
 if [ "$1" == "db" ]; then
 	echo "$(date) - Clearing History..."
 	if [ -f /etc/pihole/speedtest.db ]; then
-		mv /etc/pihole/speedtest.db speedtest.db.old
+		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
     cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi

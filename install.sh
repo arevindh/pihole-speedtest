@@ -21,17 +21,17 @@ fi
 echo "$(date) - Downloading Latest Speedtest Mod..."
 
 cd /var/www/html
-rm -rf mod_admin
-git clone https://github.com/arevindh/AdminLTE mod_admin
-cd mod_admin
+rm -rf new_admin
+git clone https://github.com/arevindh/AdminLTE new_admin
+cd new_admin
 git fetch --tags
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 git checkout $latestTag
 
 cd /opt/
-rm -rf mod_pihole
-git clone https://github.com/arevindh/pi-hole mod_pihole
-cd mod_pihole
+rm -rf new_pihole
+git clone https://github.com/arevindh/pi-hole new_pihole
+cd new_pihole
 git fetch --tags
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 git checkout $latestTag
@@ -40,6 +40,8 @@ chmod +x advanced/Scripts/webpage.sh
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
+	rm -rf /opt/pihole/webpage.sh.*
+	rm -rf /var/www/html/*_admin
 	exit 0
 fi
 
@@ -47,6 +49,8 @@ if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
+		rm -rf /opt/pihole/webpage.sh.*
+		rm -rf /var/www/html/*_admin
 		exit 0
 	fi
 fi
@@ -55,19 +59,22 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /opt/
 cp pihole/webpage.sh pihole/webpage.sh.org
-cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
-rm -rf mod_pihole
+cp new_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
+rm -rf new_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
-cp -r mod_admin admin
+cp new_admin mod_admin
+mv new_admin admin
+cd -
+cp pihole/webpage.sh.mod pihole/webpage.sh
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	echo "$(date) - Initializing Database..."
 	if [ -f /etc/pihole/speedtest.db ]; then
-		mv /etc/pihole/speedtest.db speedtest.db.old
+		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
-    cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+    cp admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
 pihole updatechecker local

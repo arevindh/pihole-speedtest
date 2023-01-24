@@ -30,7 +30,7 @@ git checkout $latestTag
 
 cd /opt/
 rm -rf new_pihole
-git clone --depth=1 -b ipitio https://github.com/arevindh/pi-hole new_pihole
+git clone --depth=1 https://github.com/arevindh/pi-hole new_pihole
 cd new_pihole
 git fetch --tags -q
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)

@@ -8,14 +8,13 @@ fi
 if [ "$1" != "un" ]; then
 	echo "$(date) - Verifying Dependencies..."
 
-	apt-get remove -y speedtest-cli
 	if [ ! -f /usr/bin/speedtest ]; then
 		echo "$(date) - Adding speedtest source..."
 		# https://www.speedtest.net/apps/cli
 		curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 	fi
 	PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-	apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest
+	apt-get install -y speedtest-cli- sqlite3 $PHP_VERSION-sqlite3 jq speedtest
 
 	echo "$(date) - Downloading Latest Speedtest Mod..."
 

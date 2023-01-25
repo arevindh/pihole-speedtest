@@ -11,6 +11,8 @@ help() {
 }
 
 mod() {
+    printf "Thanks for using Speedtest Mod!\nScripts by @ipitio\n\n"
+    
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         help
     fi
@@ -19,8 +21,6 @@ mod() {
         sudo "$0" "$@"
         exit $?
     fi
-    
-    printf "Thanks for using Speedtest Mod!\n"
         
     curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then

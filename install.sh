@@ -8,7 +8,7 @@ fi
 if [ "$1" != "un" ]; then
 	echo "$(date) - Verifying Dependencies..."
 
-	if [ ! -f /usr/bin/speedtest ]; then
+	if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
 		echo "$(date) - Adding speedtest source..."
 		# https://www.speedtest.net/apps/cli
 		curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
@@ -33,7 +33,6 @@ if [ "$1" != "un" ]; then
 	git fetch --tags -q
 	latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 	git checkout $latestTag
-	chmod +x advanced/Scripts/webpage.sh
 fi
 
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
@@ -70,6 +69,7 @@ cp -r new_admin mod_admin
 mv new_admin admin
 cd - > /dev/null
 cp pihole/webpage.sh.mod pihole/webpage.sh
+chmod +x pihole/webpage.sh
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	echo "$(date) - Initializing Database..."

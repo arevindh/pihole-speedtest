@@ -10,8 +10,6 @@ fi
 if [ "$1" != "un" ]; then
 	echo "$(date) - Verifying Dependencies..."
 
-	rm -f /etc/apt/sources.list.d/ookla_speedtest-cli.list
-	apt-get update
 	if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
 		echo "$(date) - Adding speedtest source..."
 		# https://www.speedtest.net/apps/cli

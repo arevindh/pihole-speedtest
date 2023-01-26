@@ -2,9 +2,6 @@
 
 echo "$(date) - Restoring Pi-hole..."
 
-# get latest version of Pi-hole and AdminLTE on github.com/pi-hole
-
-
 cd /opt/
 if [ ! -f /opt/pihole/webpage.sh.org ]; then
     echo "$(date) - Downloading Pi-hole..."

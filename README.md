@@ -10,22 +10,24 @@ Buy me a ☕️ if you like my projects :)
 
 ### Pipe-to-Bash by @ipitio
 
+The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be in that order. Check usage for details.
+
 #### Install
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | bash
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
 ```
 
 #### Update
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | bash -s up
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
 ```
 
 #### Uninstall
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | bash -s un
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s un
 ```
 
 [Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)

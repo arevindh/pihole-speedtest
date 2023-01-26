@@ -42,13 +42,14 @@ download() {
 			else
 				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 			fi
+			apt-get install -y speedtest-cli- speedtest
+			if [ -f /usr/local/bin/speedtest ]; then
+				rm -f /usr/local/bin/speedtest
+				ln -s /usr/bin/speedtest /usr/local/bin/speedtest
+			fi
 		fi
 		PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-		apt-get install -y speedtest-cli- sqlite3 $PHP_VERSION-sqlite3 jq speedtest
-		if [ -f /usr/local/bin/speedtest ]; then
-			rm -f /usr/local/bin/speedtest
-			ln -s /usr/bin/speedtest /usr/local/bin/speedtest
-		fi
+		apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 

@@ -12,7 +12,7 @@ help() {
 
 mod() {
     printf "Thanks for using Speedtest Mod!\nScripts by @ipitio\n\n"
-    
+
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         help
     fi
@@ -32,7 +32,7 @@ mod() {
     echo "$(date) - Something went wrong." | sudo tee -a /var/log/pimod.log
     if [ "$1" == "up" ] || [ "$1" == "un" ]; then
         if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
-            echo "$(date) - Speedtest Mod is not backed up, did not restore automatically."
+            echo "$(date) - Speedtest Mod is not backed up (a restore is not needed or one failed)"
         else
             echo "$(date) - Restoring files..."
             cd /var/www/html

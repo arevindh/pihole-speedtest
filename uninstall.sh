@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+set -e
+
 echo "$(date) - Restoring Pi-hole..."
 
 cd /opt/

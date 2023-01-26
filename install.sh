@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+set -e
+
 if [ ! -f /usr/local/bin/pihole ]; then
 	echo "$(date) - Installing Pi-hole..."
 	curl -sSL https://install.pi-hole.net | sudo bash
@@ -8,10 +10,31 @@ fi
 if [ "$1" != "un" ]; then
 	echo "$(date) - Verifying Dependencies..."
 
+	rm -f /etc/apt/sources.list.d/ookla_speedtest-cli.list
+	apt-get update
 	if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
 		echo "$(date) - Adding speedtest source..."
 		# https://www.speedtest.net/apps/cli
-		curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		if [ -e /etc/os-release ]; then
+			. /etc/os-release
+
+			base="ubuntu debian"
+			os=${ID}
+			dist=${VERSION_CODENAME}
+
+			if [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
+				os=${ID_LIKE%% *}
+				dist=${UBUNTU_CODENAME}
+				[ -z "$dist" ] && dist=${VERSION_CODENAME}
+			fi
+			
+			wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh > /dev/null 2>&1
+			chmod +x /tmp/script.deb.sh
+			os=$os dist=$dist /tmp/script.deb.sh
+			rm -f /tmp/script.deb.sh
+		else
+			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		fi
 	fi
 	PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
 	apt-get install -y speedtest-cli- sqlite3 $PHP_VERSION-sqlite3 jq speedtest
@@ -28,7 +51,7 @@ if [ "$1" != "un" ]; then
 
 	cd /opt/
 	rm -rf new_pihole
-	git clone --depth=1 -b ipitio https://github.com/arevindh/pi-hole new_pihole
+	git clone --depth=1 https://github.com/arevindh/pi-hole new_pihole
 	cd new_pihole
 	git fetch --tags -q
 	latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)

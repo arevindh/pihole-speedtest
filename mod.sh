@@ -2,7 +2,7 @@
 LOG_FILE="/var/log/pimod.log"
 
 help() {
-    echo "Install Latest Speedtest Mod."
+    echo "(Re)install Latest Speedtest Mod."
     echo "Usage: sudo $0 [up] [un] [db]"
     echo "up - update Pi-hole"
     echo "un - remove the mod"
@@ -59,7 +59,7 @@ download() {
 		cd new_admin
 		git fetch --tags -q
 		latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-		git checkout $latestTag
+		#git checkout $latestTag
 
 		cd /opt/
 		rm -rf new_pihole
@@ -67,7 +67,7 @@ download() {
 		cd new_pihole
 		git fetch --tags -q
 		latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-		git checkout $latestTag
+		#git checkout $latestTag
 	fi
 }
 
@@ -86,14 +86,6 @@ install() {
 	cd - > /dev/null
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
-
-	if [ ! -f /etc/pihole/speedtest.db ] || [ "$1" == "db" ]; then
-		echo "$(date) - Initializing Database..."
-		if [ -f /etc/pihole/speedtest.db ]; then
-			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		fi
-		cp admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
-	fi
 
 	pihole updatechecker local
 
@@ -128,14 +120,14 @@ uninstall() {
 		git clone https://github.com/pi-hole/pi-hole org_pihole
 		cd org_pihole
 		git fetch --tags -q
-		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
+		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/pi-hole/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [ $(echo "$localVer > $remoteVer" | bc) -eq 1 ] || [ $(echo "$localVer" | grep -c "\.") -ne 0 ]; then
+		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
 		git checkout $remoteVer
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-		cd -
+		cd - > /dev/null
 		rm -rf org_pihole
 	fi
 
@@ -146,18 +138,17 @@ uninstall() {
 		git clone https://github.com/pi-hole/AdminLTE org_admin
 		cd org_admin
 		git fetch --tags -q
-		git reset --hard origin/master
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [ $(echo "$localVer > $remoteVer" | bc) -eq 1 ] || [ $(echo "$localVer" | grep -c "\.") -ne 0 ]; then
+		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
 		git checkout $remoteVer
-		cd -
+		cd - > /dev/null
 	fi
 
 	if [ "$1" == "db" ]; then
-		echo "$(date) - Clearing History..."
+		echo "$(date) - Configuring Database..."
 		if [ -f /etc/pihole/speedtest.db ]; then
 			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 		fi
@@ -193,24 +184,24 @@ main() {
 			update $2
 			;&
 		*)
-			install $db
+			install
 			;;
 	esac
 }
 
 restore() {
-    echo "$(date) - Something went wrong." | sudo tee -a /var/log/pimod.log
+    echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
     if [ "$1" == "up" ] || [ "$1" == "un" ]; then
         if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
-            echo "$(date) - Speedtest Mod is not backed up (a restore is not needed or one failed)"
+            echo "$(date) -  A restore is not needed or one failed."
         else
-            echo "$(date) - Restoring files..."
+            echo "$(date) - Restoring Files..."
             cd /var/www/html
             rm -rf admin
             mv mod_admin admin
             cd /opt/pihole/
             mv webpage.sh.mod webpage.sh
-            echo "$(date) - Files restored."
+            echo "$(date) - Files Restored."
         fi
     fi
     echo "$(date) - Please try again or try manually."
@@ -235,6 +226,7 @@ mod() {
         exit $?
     fi
         
+	trap 'restore $1' ERR INT TERM SIGINT SIGTERM SIGKILL SIGQUIT SIGSTOP SIGABRT SIGTSTP
     main "$@" && clean || restore $1
 }
 

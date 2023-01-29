@@ -212,7 +212,7 @@ clean() {
 
 main() {
 	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
-	op=$1
+	op=${1-}
     if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help
 		exit 0

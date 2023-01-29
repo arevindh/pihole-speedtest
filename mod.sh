@@ -87,6 +87,8 @@ install() {
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
+	[ -f /etc/pihole/speedtest.db ] || cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+
 	pihole updatechecker local
 
 	echo "$(date) - Install Complete"
@@ -140,9 +142,8 @@ uninstall() {
 	fi
 
 	if [ "${1-}" == "db" ]; then
-		echo "$(date) - Configuring Database..."
+		echo "$(date) - Configured Database"
 		[ -f /etc/pihole/speedtest.db ] && mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 	fi
 
 	echo "$(date) - Uninstalling Current Speedtest Mod..."

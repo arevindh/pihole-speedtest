@@ -41,7 +41,12 @@ download() {
 			else
 				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 			fi
-			apt-get install -y speedtest-cli- speedtest
+			if [ "$(dpkg --print-architecture)" == "arm64" ]; then
+				apt-get install -y speedtest-cli- speedtest
+			else
+				apt-get remove -y speedtest-cli
+				curl -sSLN https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-aarch64.tgz | tar -xz -C /usr/bin
+			fi
 			if [ -f /usr/local/bin/speedtest ]; then
 				rm -f /usr/local/bin/speedtest
 				ln -s /usr/bin/speedtest /usr/local/bin/speedtest

@@ -16,7 +16,7 @@ download() {
 		curl -sSL https://install.pi-hole.net | sudo bash
 	fi
 
-	if	[ -z "$1" ] || [ "$1" == "up" ]; then
+	if	[ -z "${1-}" ] || [ "$1" == "up" ]; then
 		echo "$(date) - Verifying Dependencies..."
 
 		if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then

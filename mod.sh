@@ -87,7 +87,10 @@ install() {
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
-	[ -f /etc/pihole/speedtest.db ] || cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+	if [ ! -f /etc/pihole/speedtest.db ]; then
+		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		echo "$(date) - Initialized Database"
+	fi
 
 	pihole updatechecker local
 
@@ -107,7 +110,9 @@ update() {
     git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	echo "$(date) - Update Complete"
-	[ "${1-}" == "un" ] && purge
+	if [ "${1-}" == "un" ]; then
+		purge
+	fi
 }
 
 uninstall() {
@@ -121,7 +126,9 @@ uninstall() {
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/pi-hole/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		[[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]] && remoteVer=$localVer
+		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
+			remoteVer=$localVer
+		fi
 		git checkout -q $remoteVer
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 		cd - > /dev/null
@@ -136,14 +143,18 @@ uninstall() {
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		[[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]] && remoteVer=$localVer
+		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]
+			remoteVer=$localVer
+		fi
 		git checkout -q $remoteVer
 		cd - > /dev/null
 	fi
 
 	if [ "${1-}" == "db" ]; then
-		echo "$(date) - Configured Database"
-		[ -f /etc/pihole/speedtest.db ] && mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+		if [ -f /etc/pihole/speedtest.db ]; then
+			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+			echo "$(date) - Configured Database"
+		fi
 	fi
 
 	echo "$(date) - Uninstalling Current Speedtest Mod..."

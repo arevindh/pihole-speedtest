@@ -143,7 +143,7 @@ uninstall() {
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]
+		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
 		git checkout -q $remoteVer

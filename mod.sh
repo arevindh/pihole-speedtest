@@ -174,7 +174,7 @@ abort() {
 				mv mod_admin admin
 				cd /opt/pihole/
 				mv webpage.sh.mod webpage.sh
-				echo "$(date) - Files Restored."
+				echo "$(date) - Files Restored"
 			fi
 			;;
 		*)
@@ -187,7 +187,7 @@ abort() {
 				mv org_admin admin
 				cd /opt/pihole/
 				mv webpage.sh.org webpage.sh
-				echo "$(date) - Files Restored."
+				echo "$(date) - Files Restored"
 			fi
 			;;
 	esac

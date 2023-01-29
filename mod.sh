@@ -150,11 +150,9 @@ uninstall() {
 		cd - > /dev/null
 	fi
 
-	if [ "${1-}" == "db" ]; then
-		if [ -f /etc/pihole/speedtest.db ]; then
-			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-			echo "$(date) - Configured Database"
-		fi
+	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
+		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+		echo "$(date) - Configured Database"
 	fi
 
 	echo "$(date) - Uninstalling Current Speedtest Mod..."

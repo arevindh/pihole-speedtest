@@ -178,7 +178,7 @@ uninstall() {
 abort() {
     echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
 	case $1 in
-		up | un)
+		up | un | db)
 			if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
 				echo "$(date) - A restore is not needed or one failed."
 			else

@@ -2,13 +2,33 @@
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
-
-## By me a coffee 
+## By me a coffee
 
 Buy me a ☕️ if you like my projects :)
 
-
 <a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+### Pipe-to-Bash by @ipitio
+
+The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be in that order. Check usage for details.
+
+#### Install
+
+```bash
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
+```
+
+#### Update
+
+```bash
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
+```
+
+#### Uninstall
+
+```bash
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s un
+```
 
 [Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
@@ -18,17 +38,17 @@ Buy me a ☕️ if you like my projects :)
 
 **Jan 5 2023**  
 
-Pi-hole 5.14.2 FTL 5.20, Web v5.18 
+Pi-hole 5.14.2 FTL 5.20, Web v5.18
 
 Wishing everyone a very happy New Year!
 
 **Nov 24 2022**
 
-Pi-hole 5.14.1 FTL 5.19.1, Web v5.17 
+Pi-hole 5.14.1 FTL 5.19.1, Web v5.17
 
 **Oct 18 2022**
 
-Pi-hole v5.13 FTL v5.18.2, Web v5.16 
+Pi-hole v5.13 FTL v5.18.2, Web v5.16
 
 **Oct 1 2022**
 
@@ -36,7 +56,7 @@ Pi-hole 5.12.2 FTL 5.18.1 Admin LTE 5.15.1 , Docker 2022.09.4
 
 **Sept 8 2022**
 
-Pi-hole FTL v5.17, Web v5.14.2 and Core v5.12 
+Pi-hole FTL v5.17, Web v5.14.2 and Core v5.12
 
 **Sept 4 2022**
 
@@ -44,7 +64,7 @@ Pi-hole FTL v5.17, Web v5.14.1 and Core v5.12
 
 **August 29 2022**
 
-Pi-hole docker update 
+Pi-hole docker update
 
 **July 11 2022**
 
@@ -56,7 +76,7 @@ Pi-hole FTL v5.16, Web v5.13 and Core v5.11.3
 
 **April 24 2022**
 
-Pi-hole FTL v5.15, Web v5.12 and Core v5.10 
+Pi-hole FTL v5.15, Web v5.12 and Core v5.10
 
 **Mar 17 2022**
 
@@ -112,7 +132,7 @@ Speedtest mod update, Pi-hole Web v5.11.1
 
 **Nov 30 2020**
 
-* Updated to pihole 5.2(Web) & 5.2(Core) 
+* Updated to pihole 5.2(Web) & 5.2(Core)
 
 **OCt 9 2020**
 
@@ -179,8 +199,6 @@ Speedtest mod update, Pi-hole Web v5.11.1
 * Speedtest mod is up to date with Pi-hole v4.0
 * Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
 
-
-
 ## About the project
 
 So [project](https://blog.arevindh.com/2017/07/13/add-speedtest-to-pihole-webui/) is just another fun project integrating speedtest to PiHole Web UI.
@@ -196,9 +214,10 @@ What does this mod have in extra ?
 3. Detailed speedtest results page.
 4. Ability to schedule speedtest interval.
 
-## Use Official CLI Mode for best results.
+## Use Official CLI Mode for best results
 
 ## Inconsistency for python Mode
+
 -------------
 
 This Project is based on speedtest-cli. The text below is from their repository [readme](https://github.com/sivel/speedtest-cli#inconsistency) file.

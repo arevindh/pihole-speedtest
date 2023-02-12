@@ -30,7 +30,7 @@ download() {
 
 				if [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
 					os=${ID_LIKE%% *}
-					dist=${UBUNTU_CODENAME}
+					dist=${VERSION_CODENAME}
 					[ -z "$dist" ] && dist=${VERSION_CODENAME}
 				fi
 				
@@ -42,7 +42,7 @@ download() {
 				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 			fi
 			if [ "$(dpkg --print-architecture)" != "arm64" ]; then
-			        apt-get remove -y speedtest-cli
+			    apt-get remove -y speedtest-cli
 				apt-get install -y speedtest
 			else
 				apt-get remove -y speedtest-cli

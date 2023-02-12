@@ -30,6 +30,7 @@ download() {
 
 				if [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
 					os=${ID_LIKE%% *}
+					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
 					dist=${UBUNTU_CODENAME}
 					[ -z "$dist" ] && dist=${VERSION_CODENAME}
 				fi

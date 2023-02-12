@@ -191,6 +191,7 @@ abort() {
 			restore org
 			;;
 	esac
+	pihole restartdns
     echo "$(date) - Please try again or try manually."
     exit 1
 }
@@ -198,6 +199,7 @@ abort() {
 clean() {
     rm -rf /var/www/html/mod_admin
     rm -f /opt/pihole/webpage.sh.mod
+	pihole restartdns
     exit 0
 }
 

@@ -23,18 +23,15 @@ download() {
 			# https://www.speedtest.net/apps/cli
 			if [ -e /etc/os-release ]; then
 				. /etc/os-release
-
 				base="ubuntu debian"
 				os=${ID}
 				dist=${VERSION_CODENAME}
-
-				if [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
+				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
 					os=${ID_LIKE%% *}
 					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
 					dist=${UBUNTU_CODENAME}
 					[ -z "$dist" ] && dist=${VERSION_CODENAME}
 				fi
-				
 				wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh > /dev/null 2>&1
 				chmod +x /tmp/script.deb.sh
 				os=$os dist=$dist /tmp/script.deb.sh
@@ -42,19 +39,13 @@ download() {
 			else
 				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 			fi
-			if [ "$(dpkg --print-architecture)" != "arm64" ]; then
-				apt-get install -y speedtest-cli- speedtest
-			else
-				apt-get remove -y speedtest-cli
-				curl -sSLN https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-aarch64.tgz | tar -xz -C /usr/bin
-			fi
-			if [ -f /usr/local/bin/speedtest ]; then
-				rm -f /usr/local/bin/speedtest
-				ln -s /usr/bin/speedtest /usr/local/bin/speedtest
-			fi
 		fi
 		PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-		apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq
+		apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest-cli- speedtest
+		if [ -f /usr/local/bin/speedtest ]; then
+			rm -f /usr/local/bin/speedtest
+			ln -s /usr/bin/speedtest /usr/local/bin/speedtest
+		fi
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 
@@ -176,34 +167,28 @@ uninstall() {
 	echo "$(date) - Uninstall Complete"
 }
 
+restore() {
+	if [ ! -d /var/www/html/${1}_admin ] || [ ! -f /opt/pihole/webpage.sh.${1} ]; then
+		echo "$(date) - A restore is not needed or one failed."
+	else
+		echo "$(date) - Restoring Files..."
+		cd /var/www/html
+		rm -rf admin
+		mv ${1}_admin admin
+		cd /opt/pihole/
+		mv webpage.sh.${1} webpage.sh
+		echo "$(date) - Files Restored"
+	fi
+}
+
 abort() {
     echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
 	case $1 in
 		up | un | db)
-			if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
-				echo "$(date) - A restore is not needed or one failed."
-			else
-				echo "$(date) - Restoring Files..."
-				cd /var/www/html
-				rm -rf admin
-				mv mod_admin admin
-				cd /opt/pihole/
-				mv webpage.sh.mod webpage.sh
-				echo "$(date) - Files Restored"
-			fi
+			restore mod
 			;;
 		*)
-			if [ ! -d /var/www/html/org_admin ] || [ ! -f /opt/pihole/webpage.sh.org ]; then
-				echo "$(date) - A restore is not needed or one failed."
-			else
-				echo "$(date) - Restoring Files..."
-				cd /var/www/html
-				rm -rf admin
-				mv org_admin admin
-				cd /opt/pihole/
-				mv webpage.sh.org webpage.sh
-				echo "$(date) - Files Restored"
-			fi
+			restore org
 			;;
 	esac
     echo "$(date) - Please try again or try manually."

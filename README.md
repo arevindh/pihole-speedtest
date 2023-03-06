@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
-## By me a coffee
+## Buy me a ☕️
 
 Buy me a ☕️ if you like my projects :)
 
@@ -18,7 +18,7 @@ The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
 ```
 
-#### Update
+#### Ucoffeepdate
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up

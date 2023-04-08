@@ -18,7 +18,7 @@ The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
 ```
 
-#### Ucoffeepdate
+#### Update
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up

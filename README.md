@@ -36,6 +36,10 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 
 ## Update
 
+**June 8 2023**  
+
+Pi-hole 5.17.1 FTL 5.23, Web 5.20.1
+
 **Jan 5 2023**  
 
 Pi-hole 5.14.2 FTL 5.20, Web v5.18

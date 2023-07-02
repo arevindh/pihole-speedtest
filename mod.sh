@@ -183,7 +183,7 @@ restore() {
 
 abort() {
     echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
-	case $1 in
+	case ${1-} in
 		up | un | db)
 			restore mod
 			;;

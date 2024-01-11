@@ -2,11 +2,11 @@
 LOG_FILE="/var/log/pimod.log"
 
 help() {
-    echo "(Re)install Latest Speedtest Mod."
-    echo "Usage: sudo $0 [up] [un] [db]"
-    echo "up - update Pi-hole"
-    echo "un - remove the mod"
-    echo "db - flush database"
+	echo "(Re)install Latest Speedtest Mod."
+	echo "Usage: sudo $0 [up] [un] [db]"
+	echo "up - update Pi-hole"
+	echo "un - remove the mod"
+	echo "db - flush database"
 }
 
 download() {
@@ -15,7 +15,7 @@ download() {
 		curl -sSL https://install.pi-hole.net | sudo bash
 	fi
 
-	if	[ -z "${1-}" ] || [ "$1" == "up" ]; then
+	if [ -z "${1-}" ] || [ "$1" == "up" ]; then
 		echo "$(date) - Verifying Dependencies..."
 
 		if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
@@ -26,13 +26,13 @@ download() {
 				base="ubuntu debian"
 				os=${ID}
 				dist=${VERSION_CODENAME}
-				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
+				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]] && [ "${os}" != "ubuntu" ]; then
 					os=${ID_LIKE%% *}
 					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
 					dist=${UBUNTU_CODENAME}
 					[ -z "$dist" ] && dist=${VERSION_CODENAME}
 				fi
-				wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh > /dev/null 2>&1
+				wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh >/dev/null 2>&1
 				chmod +x /tmp/script.deb.sh
 				os=$os dist=$dist /tmp/script.deb.sh
 				rm -f /tmp/script.deb.sh
@@ -54,7 +54,7 @@ download() {
 		git clone --depth=1 https://github.com/arevindh/AdminLTE new_admin
 		cd new_admin
 		git fetch --tags -q
-		latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 		git checkout $latestTag
 
 		cd /opt/
@@ -62,7 +62,7 @@ download() {
 		git clone --depth=1 https://github.com/arevindh/pi-hole new_pihole
 		cd new_pihole
 		git fetch --tags -q
-		latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 		git checkout $latestTag
 	fi
 }
@@ -80,7 +80,7 @@ install() {
 	cp -r new_admin mod_admin
 	mv admin org_admin
 	mv new_admin admin
-	cd - > /dev/null
+	cd - >/dev/null
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
@@ -104,7 +104,7 @@ update() {
 	echo "$(date) - Updating Pi-hole..."
 	cd /var/www/html/admin
 	git reset --hard origin/master
-    git checkout master
+	git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	echo "$(date) - Update Complete"
 	if [ "${1-}" == "un" ]; then
@@ -114,11 +114,11 @@ update() {
 
 uninstall() {
 	echo "$(date) - Restoring Pi-hole..."
-	
+
 	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
 		rm -rf org_pihole
-		git clone https://github.com/pi-hole/pi-hole org_pihole 
+		git clone https://github.com/pi-hole/pi-hole org_pihole
 		cd org_pihole
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
@@ -128,10 +128,10 @@ uninstall() {
 		fi
 		git checkout -q $remoteVer
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-		cd - > /dev/null
+		cd - >/dev/null
 		rm -rf org_pihole
 	fi
-	
+
 	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
 		rm -rf org_admin
@@ -144,7 +144,7 @@ uninstall() {
 			remoteVer=$localVer
 		fi
 		git checkout -q $remoteVer
-		cd - > /dev/null
+		cd - >/dev/null
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
@@ -182,38 +182,38 @@ restore() {
 }
 
 abort() {
-    echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
+	echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
 	case ${1-} in
-		up | un | db)
-			restore mod
-			;;
-		*)
-			restore org
-			;;
+	up | un | db)
+		restore mod
+		;;
+	*)
+		restore org
+		;;
 	esac
 	pihole restartdns
-    echo "$(date) - Please try again or try manually."
-    exit 1
+	echo "$(date) - Please try again or try manually."
+	exit 1
 }
 
 clean() {
-    rm -rf /var/www/html/mod_admin
-    rm -f /opt/pihole/webpage.sh.mod
+	rm -rf /var/www/html/mod_admin
+	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
-    exit 0
+	exit 0
 }
 
 main() {
 	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
 	op=${1-}
-    if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
-        help
+	if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
+		help
 		exit 0
-    fi
-    if [ $EUID != 0 ]; then
-        sudo "$0" "$@"
-        exit $?
-    fi
+	fi
+	if [ $EUID != 0 ]; then
+		sudo "$0" "$@"
+		exit $?
+	fi
 	set -Eeuo pipefail
 	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
 
@@ -221,15 +221,16 @@ main() {
 	download $op
 	uninstall $db
 	case $op in
-		un)
-			purge
-			;;
-		up)
-			update ${2-}
-			;&
-		*)
-			install
-			;;
+	un)
+		purge
+		;;
+	up)
+		update ${2-}
+		install
+		;;
+	*)
+		install
+		;;
 	esac
 	exit 0
 }

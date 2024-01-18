@@ -9,6 +9,29 @@ help() {
 	echo "db - flush database"
 }
 
+clone() {
+	local num_args=$#
+	local cd_path=$1
+	local dir_name=$2
+	local repo=$3
+	local repo_name=${4-}
+
+	cd "$cd_path"
+	rm -rf "$dir_name"
+	git clone --depth=1 "$repo" "$dir_name"
+	cd "$dir_name"
+	git fetch --tags -q
+	latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+	if [ "$num_args" -eq 4 ]; then
+		git fetch --unshallow
+		localTag=$(pihole -v | grep "$repo_name" | cut -d ' ' -f 6)
+		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
+			latestTag=$localTag
+		fi
+	fi
+	git -c advice.detachedHead=false checkout $latestTag
+}
+
 download() {
 	if [ ! -f /usr/local/bin/pihole ]; then
 		echo "$(date) - Installing Pi-hole..."
@@ -49,21 +72,8 @@ download() {
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 
-		cd /var/www/html
-		rm -rf new_admin
-		git clone --depth=1 https://github.com/arevindh/AdminLTE new_admin
-		cd new_admin
-		git fetch --tags -q
-		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
-		git checkout $latestTag
-
-		cd /opt/
-		rm -rf new_pihole
-		git clone --depth=1 https://github.com/arevindh/pi-hole new_pihole
-		cd new_pihole
-		git fetch --tags -q
-		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
-		git checkout $latestTag
+		clone /var/www/html new_admin https://github.com/arevindh/AdminLTE
+		clone /opt new_pihole https://github.com/arevindh/pi-hole
 	fi
 }
 
@@ -115,36 +125,15 @@ update() {
 uninstall() {
 	echo "$(date) - Restoring Pi-hole..."
 
-	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
-		rm -rf org_pihole
-		git clone https://github.com/pi-hole/pi-hole org_pihole
-		cd org_pihole
-		git fetch --tags -q
-		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
-		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/pi-hole/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
-			remoteVer=$localVer
-		fi
-		git checkout -q $remoteVer
+		clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-		cd - >/dev/null
+		cd ..
 		rm -rf org_pihole
 	fi
 
-	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
-		rm -rf org_admin
-		git clone https://github.com/pi-hole/AdminLTE org_admin
-		cd org_admin
-		git fetch --tags -q
-		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
-		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
-			remoteVer=$localVer
-		fi
-		git checkout -q $remoteVer
-		cd - >/dev/null
+		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE AdminLTE
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
@@ -154,6 +143,7 @@ uninstall() {
 
 	echo "$(date) - Uninstalling Current Speedtest Mod..."
 
+	cd /var/www/html
 	if [ -d /var/www/html/admin ]; then
 		rm -rf mod_admin
 		mv admin mod_admin

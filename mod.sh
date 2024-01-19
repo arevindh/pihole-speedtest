@@ -22,7 +22,8 @@ clone() {
 	git fetch --tags -q
 	local latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	if [ ! -z "$name" ]; then
-		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		local localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
 		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 			latestTag=$localTag
 			git fetch --unshallow
@@ -131,7 +132,7 @@ uninstall() {
 	fi
 
 	if [ ! -d /var/www/html/org_admin ]; then
-		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE AdminLTE
+		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
@@ -185,7 +186,7 @@ clean() {
 	rm -rf /var/www/html/mod_admin
 	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
-	echo "$(date) - Clean Complete"
+	echo "$(date) - Process Complete"
 	exit 0
 }
 
@@ -218,7 +219,6 @@ main() {
 		install
 		;;
 	esac
-	echo "$(date) - Process Complete"
 	exit 0
 }
 

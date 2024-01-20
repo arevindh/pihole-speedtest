@@ -96,7 +96,7 @@ install() {
 
 	if [ ! -f /etc/pihole/speedtest.db ]; then
 		echo "$(date) - Creating Database..."
-		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 	fi
 
 	pihole updatechecker local

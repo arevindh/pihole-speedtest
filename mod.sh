@@ -102,11 +102,19 @@ install() {
 	pihole updatechecker local
 }
 
+hashFile() {
+	md5sum $1 | cut -d ' ' -f 1
+}
+
 purge() {
 	echo "$(date) - Removing backups..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
-	rm -rf /etc/pihole/speedtest.db*
+	rm -rf /etc/pihole/speedtest.db.*
+	rm -rf /etc/pihole/speedtest.db_*
+	if [ "$(hashFile /etc/pihole/speedtest.db)" == "$(hashFile /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db)" ]; then
+		rm -f /etc/pihole/speedtest.db
+	fi
 	exit 0
 }
 
@@ -148,9 +156,14 @@ uninstall() {
 		chmod +x webpage.sh
 	fi
 
-	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
-		echo "$(date) - Flushing Database..."
-		mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+	if [ "${1-}" == "db" ]; then
+		if [ -f /etc/pihole/speedtest.db ] && [ "$(hashFile /etc/pihole/speedtest.db)" != "$(hashFile /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db)" ]; then
+			echo "$(date) - Flushing Database..."
+			mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+		elif [ -f /etc/pihole/speedtest.db.old ]; then
+			echo "$(date) - Restoring Database..."
+			mv -f /etc/pihole/speedtest.db.old /etc/pihole/speedtest.db
+		fi
 	fi
 }
 

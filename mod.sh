@@ -95,8 +95,8 @@ install() {
 	chmod +x pihole/webpage.sh
 
 	if [ ! -f /etc/pihole/speedtest.db ]; then
+		echo "$(date) - Creating Database..."
 		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
-		echo "$(date) - Initialized Database"
 	fi
 
 	pihole updatechecker local
@@ -106,6 +106,7 @@ purge() {
 	echo "$(date) - Removing backups..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
+	rm -rf /etc/pihole/speedtest.db*
 	exit 0
 }
 
@@ -149,7 +150,7 @@ uninstall() {
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
 		echo "$(date) - Flushing Database..."
-		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
+		mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
 }
 
@@ -187,7 +188,7 @@ clean() {
 	rm -rf /var/www/html/mod_admin
 	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
-	echo "$(date) - Process Complete"
+	echo "$(date) - Done!"
 	exit 0
 }
 

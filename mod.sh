@@ -4,9 +4,9 @@ LOG_FILE="/var/log/pimod.log"
 help() {
 	echo "(Re)install Latest Speedtest Mod."
 	echo "Usage: sudo $0 [up] [un] [db]"
-	echo "up - update Pi-hole"
-	echo "un - remove the mod"
-	echo "db - flush database"
+	echo "up - update Pi-hole (along with the Mod)"
+	echo "un - remove the mod (including all backups)"
+	echo "db - flush database (restore for a short while after)"
 }
 
 setTags() {
@@ -24,39 +24,36 @@ setTags() {
 	fi
 }
 
-clone() {
-	local path=$1
-	local dest=$2
-	local src=$3
-	local name=${4-} # if set, will keep local tag if older than latest
-
-	cd "$path"
-	rm -rf "$dest"
-	git clone --depth=1 "$src" "$dest"
-	setTags "$dest" "$name"
-	local rightTag=$latestTag
-	if [ ! -z "$name" ]; then
-		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$rightTag" ]]; then
-			rightTag=$localTag
-			git fetch --unshallow
-		fi
-	fi
-	git -c advice.detachedHead=false checkout $rightTag
-}
-
 refresh() {
 	local path=$1
 	local name=$2
 	local url=$3
+	local src=${4-}
 	local dest=$path/$name
 
-	if [ ! -d $dest ]; then
-		clone $path $name $url
-	else
+	if [ ! -d $dest ]; then # replicate
+		cd "$path"
+		rm -rf "$name"
+		git clone --depth=1 "$url" "$name"
+		setTags "$name" "$src"
+		if [ ! -z "$src" ]; then
+			if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
+				latestTag=$localTag
+				git fetch --unshallow
+			fi
+		fi
+	elif [ ! -z "$src" ]; then # revert
+		setTags $dest
+		git remote | grep -q upstream && git remote remove upstream
+		git remote add upstream $url
+		git fetch upstream -q
+		git reset --hard upstream/master
+	else # reset
 		setTags $dest
 		git reset --hard origin/master
-		git -c advice.detachedHead=false checkout $latestTag
 	fi
+
+	git -c advice.detachedHead=false checkout $latestTag
 }
 
 download() {
@@ -96,22 +93,14 @@ download() {
 			rm -f /usr/local/bin/speedtest
 			ln -s /usr/bin/speedtest /usr/local/bin/speedtest
 		fi
-
-		echo "$(date) - Downloading Latest Speedtest Mod..."
-
-		refresh /var/www/html mod_admin https://github.com/arevindh/AdminLTE
-		refresh /opt mod_pihole https://github.com/arevindh/pi-hole
 	fi
 }
 
 install() {
 	echo "$(date) - Installing Speedtest Mod..."
 
-	cd /var/www/html
-	if [ -d /var/www/html/admin ]; then
-		mv -f admin org_admin
-	fi
-	cp -r mod_admin admin
+	refresh /opt mod_pihole https://github.com/arevindh/pi-hole
+	refresh /var/www/html admin https://github.com/arevindh/AdminLTE web
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
@@ -157,30 +146,31 @@ uninstall() {
 		echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
-			clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			if [ ! -d /opt/org_pihole ]; then
+				refresh /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			fi
+			cd /opt/org_pihole
 			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 			cd ..
 			rm -rf org_pihole
 		fi
 
-		if [ ! -d /var/www/html/org_admin ]; then
-			clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
-		fi
-
-		cd /var/www/html
-		cp -r org_admin admin
+		refresh /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
 		mv webpage.sh.org webpage.sh
 		chmod +x webpage.sh
 	fi
 
-	if [ "${1-}" == "db" ]; then
-		if [ -f /etc/pihole/speedtest.db ] && [ "$(hashFile /etc/pihole/speedtest.db)" != "$(hashFile /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db)" ]; then
+	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
+	local curr_db=/etc/pihole/speedtest.db
+	local last_db=/etc/pihole/speedtest.db.old
+	if [ "${1-}" == "db" ] && [ -f $init_db ]; then
+		if [ -f $curr_db ] && [ "$(hashFile $curr_db)" != "$(hashFile $init_db)" ]; then
 			echo "$(date) - Flushing Database..."
-			mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		elif [ -f /etc/pihole/speedtest.db.old ]; then
+			mv -f $curr_db $last_db
+		elif [ -f $last_db ]; then
 			echo "$(date) - Restoring Database..."
-			mv -f /etc/pihole/speedtest.db.old /etc/pihole/speedtest.db
+			mv -f $last_db $curr_db
 		fi
 	fi
 }
@@ -214,7 +204,7 @@ abort() {
 	exit 1
 }
 
-clean() {
+commit() {
 	pihole restartdns
 	echo "$(date) - Done!"
 	exit 0
@@ -232,7 +222,7 @@ main() {
 		exit $?
 	fi
 	set -Eeuo pipefail
-	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
+	trap '[ "$?" -eq "0" ] && commit || abort $op' EXIT
 
 	local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
 	download $op

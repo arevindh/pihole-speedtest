@@ -9,6 +9,21 @@ help() {
 	echo "db - flush database"
 }
 
+setTags() {
+	local path=${1-}
+	local name=${2-}
+
+	if [ ! -z "$path" ]; then
+		cd "$path"
+		git fetch --tags -q
+		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+	fi
+	if [ ! -z "$name" ]; then
+		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
+	fi
+}
+
 clone() {
 	local path=$1
 	local dest=$2
@@ -18,18 +33,30 @@ clone() {
 	cd "$path"
 	rm -rf "$dest"
 	git clone --depth=1 "$src" "$dest"
-	cd "$dest"
-	git fetch --tags -q
-	local latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+	setTags "$dest" "$name"
+	local rightTag=$latestTag
 	if [ ! -z "$name" ]; then
-		local localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
-		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
-		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
-			latestTag=$localTag
+		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$rightTag" ]]; then
+			rightTag=$localTag
 			git fetch --unshallow
 		fi
 	fi
-	git -c advice.detachedHead=false checkout $latestTag
+	git -c advice.detachedHead=false checkout $rightTag
+}
+
+refresh() {
+	local path=$1
+	local name=$2
+	local url=$3
+	local dest=$path/$name
+
+	if [ ! -d $dest ]; then
+		clone $path $name $url
+	else
+		setTags $dest
+		git reset --hard origin/master
+		git -c advice.detachedHead=false checkout $latestTag
+	fi
 }
 
 download() {
@@ -72,26 +99,22 @@ download() {
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 
-		clone /var/www/html new_admin https://github.com/arevindh/AdminLTE
-		clone /opt new_pihole https://github.com/arevindh/pi-hole
+		refresh /var/www/html mod_admin https://github.com/arevindh/AdminLTE
+		refresh /opt mod_pihole https://github.com/arevindh/pi-hole
 	fi
 }
 
 install() {
 	echo "$(date) - Installing Speedtest Mod..."
 
+	cd /var/www/html
+	if [ -d /var/www/html/admin ]; then
+		mv -f admin org_admin
+	fi
+	cp -r mod_admin admin
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
-	cp new_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
-	rm -rf new_pihole
-	cd /var/www/html
-	rm -rf org_admin
-	rm -rf mod_admin
-	cp -r new_admin mod_admin
-	mv admin org_admin
-	mv new_admin admin
-	cd - >/dev/null
-	cp pihole/webpage.sh.mod pihole/webpage.sh
+	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
 	if [ ! -f /etc/pihole/speedtest.db ]; then
@@ -145,13 +168,8 @@ uninstall() {
 		fi
 
 		cd /var/www/html
-		if [ -d /var/www/html/admin ]; then
-			rm -rf mod_admin
-			mv admin mod_admin
-		fi
-		mv org_admin admin
+		cp -r org_admin admin
 		cd /opt/pihole/
-		cp webpage.sh webpage.sh.mod
 		mv webpage.sh.org webpage.sh
 		chmod +x webpage.sh
 	fi
@@ -197,9 +215,6 @@ abort() {
 }
 
 clean() {
-	echo "$(date) - Cleaning up..."
-	rm -rf /var/www/html/mod_admin
-	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
 	echo "$(date) - Done!"
 	exit 0

@@ -164,8 +164,8 @@ uninstall() {
 	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
 	local curr_db=/etc/pihole/speedtest.db
 	local last_db=/etc/pihole/speedtest.db.old
-	if [ "${1-}" == "db" ] && [ -f $init_db ]; then
-		if [ -f $curr_db ] && [ "$(hashFile $curr_db)" != "$(hashFile $init_db)" ]; then
+	if [ "${1-}" == "db" ]; then
+		if [ -f $curr_db ] && [ -f $init_db ] && [ "$(hashFile $curr_db)" != "$(hashFile $init_db)" ]; then
 			echo "$(date) - Flushing Database..."
 			mv -f $curr_db $last_db
 		elif [ -f $last_db ]; then

@@ -86,8 +86,8 @@ install() {
 			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		fi
 	fi
-	local PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-	apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest-cli- speedtest
+	local PHP_VERSION=$(php -v | head -n 1 | awk '{print $2}' | cut -d "." -f 1,2)
+	apt-get install -y sqlite3 "${PHP_VERSION}-sqlite3" jq speedtest-cli- speedtest
 	if [ -f /usr/local/bin/speedtest ]; then
 		rm -f /usr/local/bin/speedtest
 		ln -s /usr/bin/speedtest /usr/local/bin/speedtest
@@ -163,15 +163,14 @@ uninstall() {
 			if [ ! -d /opt/org_pihole ]; then
 				download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
 			fi
-			cd /opt/org_pihole
-			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-			cd ..
+			cd /opt
+			cp org_pihole/advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 			rm -rf org_pihole
 		fi
 
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
-		mv webpage.sh.org webpage.sh
+		cp webpage.sh.org webpage.sh
 		chmod +x webpage.sh
 	fi
 

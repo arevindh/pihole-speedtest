@@ -8,7 +8,7 @@ Test your connection speed directly in the Pi-hole web interface!
 
 ## Features
 
-This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
+This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests (usually*) using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
 
 * View the results in the web interface (Speedtest Log),
 * Flush the Database, or
@@ -25,7 +25,13 @@ This limitation is of the script/GUI; you can always manipulate the database dir
 
 Pull requests and suggestions are welcome!
 
-Please note that the more tests you run, the more data will be used. Also note that `speedtest-cli` is no longer supported. Any issues relating to it or wonky results will be closed as wontfix and without additional reason or context.
+Please note that the more tests you run, the more data will be used. Also note that any issues relating to inconsistent or inaccurate results should be directed to the speedtest package maintainers, not here.
+
+<sup>
+
+\* While `speedtest` is preferred, by way of being reinstalled every time the Mod is updated, `speedtest-cli` will be tried should it fail. Being Python-based, `speedtest-cli` results may be less consistent or accurate; nevertheless, having it as a fallback is better than nothing.
+
+</sup>
 
 ## Usage
 

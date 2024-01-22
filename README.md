@@ -2,49 +2,76 @@
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
-## Buy me a ☕️
+Test your connection speed directly in the Pi-hole web interface!
 
-Buy me a ☕️ if you like my projects :)
+## Features
 
-<a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
 
-### Pipe-to-Bash by @ipitio
+* View the results in the web interface (Speedtest Log),
+* Flush the Database, or
+* Restore it until a new speedtest is run.
 
-The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be in that order. Check usage for details.
+This limitation is of the script/GUI; you can always manipulate the database directly or export it as a CSV (Speedtest Log > Export As CSV); however, the Mod does also allow you to:
+
+* Install, update, and uninstall itself,
+* Set a custom speedtest server,
+* Run tests ad-hoc and/or at set intervals, and
+* Display a pretty line or bar chart on the dashboard of the last 1/2/4/7/30 days of tests.
+
+Pull requests and suggestions are welcome!
+
+Please note that the more tests you run, the more data will be used. Also note that `speedtest-cli` is no longer supported. Any issues relating to it or wonky results will be closed as wontfix and without additional reason or context.
+
+### Usage
+
+The provided script by @ipitio can un/re/install and update the mod, and manage its history. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
 
 #### Install
+
+AKA (Re)Install Latest Mod and only Mod
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
 ```
 
+[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+
 #### Update
+
+The above, but also updates Pi-hole. This is `(Re)install Latest` in the web interface.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
 ```
 
+[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+
 #### Uninstall
+
+The Mod, not Pi-hole!
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s un
 ```
 
-[Install Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
-[Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+## Release Notes
 
-## Update
-
-**Dec 9 2023**  
+**Dec 9 2023**
 
 Web 5.21
 
-**June 8 2023**  
+<details>
+
+<summary>Older Notes</summary>
+
+**June 8 2023**
 
 Pi-hole 5.17.1 FTL 5.23, Web 5.20.1
 
-**Jan 5 2023**  
+**Jan 5 2023**
 
 Pi-hole 5.14.2 FTL 5.20, Web v5.18
 
@@ -207,45 +234,10 @@ Speedtest mod update, Pi-hole Web v5.11.1
 * Speedtest mod is up to date with Pi-hole v4.0
 * Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
 
-## About the project
+</details>
 
-So [project](https://blog.arevindh.com/2017/07/13/add-speedtest-to-pihole-webui/) is just another fun project integrating speedtest to PiHole Web UI.
+## Buy me a ☕️
 
-Note : It’s just a quick solution , nowhere near perfect . If you made it better please let me know [here](https://github.com/arevindh/pihole-speedtest/issues)
+Buy me a ☕️ if you like my projects :)
 
-It will be using speedtest.net on background for testing. More frequent the speed tests more data will used.
-
-What does this mod have in extra ?
-
-1. Speedtest results of 1/2/4/7/30  days as graph.
-2. Custom speed test server selection.
-3. Detailed speedtest results page.
-4. Ability to schedule speedtest interval.
-
-## Use Official CLI Mode for best results
-
-## Inconsistency for python Mode
-
--------------
-
-This Project is based on speedtest-cli. The text below is from their repository [readme](https://github.com/sivel/speedtest-cli#inconsistency) file.
-
-> It is not a goal of this application to be a reliable latency reporting tool.
-
-> Latency reported by this tool should not be relied on as a value indicative of ICMP
-> style latency. It is a relative value used for determining the lowest latency server
-> for performing the actual speed test against.
-
-> There is the potential for this tool to report results inconsistent with Speedtest.net.
-> There are several concepts to be aware of that factor into the potential inconsistency:
-
-> 1. Speedtest.net has migrated to using pure socket tests instead of HTTP based tests
-> 2. This application is written in Python
-> 3. Different versions of Python will execute certain parts of the code faster than others
-> 4. CPU and Memory capacity and speed will play a large part in inconsistency between
-   Speedtest.net and even other machines on the same network
-
-> Issues relating to inconsistencies will be closed as wontfix and without
-> additional reason or context.
-
-[Uninstall Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
+<a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>

@@ -19,15 +19,17 @@ This limitation is of the script/GUI; you can always manipulate the database dir
 * Run tests ad-hoc and/or at set intervals, and
 * Display a pretty line or bar chart on the dashboard of the last 1/2/4/7/30 days of tests.
 
+![Settings](assets/settings.png)
+
 Pull requests and suggestions are welcome!
 
 Please note that the more tests you run, the more data will be used. Also note that `speedtest-cli` is no longer supported. Any issues relating to it or wonky results will be closed as wontfix and without additional reason or context.
 
-### Usage
+## Usage
 
 The provided script by @ipitio can un/re/install and update the mod, and manage its history. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
 
-#### Install
+### Install
 
 AKA (Re)Install Latest Mod and only Mod
 
@@ -37,7 +39,7 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
-#### Update
+### Update
 
 The above, but also updates Pi-hole. This is `(Re)install Latest` in the web interface.
 
@@ -47,7 +49,7 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
-#### Uninstall
+### Uninstall
 
 The Mod, not Pi-hole!
 

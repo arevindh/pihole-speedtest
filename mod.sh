@@ -24,7 +24,7 @@ setTags() {
 	fi
 }
 
-refresh() {
+download() {
 	local path=$1
 	local name=$2
 	local url=$3
@@ -48,7 +48,7 @@ refresh() {
 		git remote add upstream $url
 		git fetch upstream -q
 		git reset --hard upstream/master
-	else # reset
+	else # refresh
 		setTags $dest
 		git reset --hard origin/master
 	fi
@@ -56,7 +56,7 @@ refresh() {
 	git -c advice.detachedHead=false checkout $latestTag
 }
 
-download() {
+install() {
 	echo "$(date) - Installing any missing dependencies..."
 
 	if [ ! -f /usr/local/bin/pihole ]; then
@@ -64,43 +64,39 @@ download() {
 		curl -sSL https://install.pi-hole.net | sudo bash
 	fi
 
-	if [ -z "${1-}" ] || [ "$1" == "up" ]; then
-		if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
-			echo "$(date) - Adding speedtest source..."
-			# https://www.speedtest.net/apps/cli
-			if [ -e /etc/os-release ]; then
-				. /etc/os-release
-				local base="ubuntu debian"
-				local os=${ID}
-				local dist=${VERSION_CODENAME}
-				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]] && [ "${os}" != "ubuntu" ]; then
-					os=${ID_LIKE%% *}
-					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
-					dist=${UBUNTU_CODENAME}
-					[ -z "$dist" ] && dist=${VERSION_CODENAME}
-				fi
-				wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh >/dev/null 2>&1
-				chmod +x /tmp/script.deb.sh
-				os=$os dist=$dist /tmp/script.deb.sh
-				rm -f /tmp/script.deb.sh
-			else
-				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+	if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
+		echo "$(date) - Adding speedtest source..."
+		# https://www.speedtest.net/apps/cli
+		if [ -e /etc/os-release ]; then
+			. /etc/os-release
+			local base="ubuntu debian"
+			local os=${ID}
+			local dist=${VERSION_CODENAME}
+			if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]] && [ "${os}" != "ubuntu" ]; then
+				os=${ID_LIKE%% *}
+				[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
+				dist=${UBUNTU_CODENAME}
+				[ -z "$dist" ] && dist=${VERSION_CODENAME}
 			fi
-		fi
-		local PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-		apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest-cli- speedtest
-		if [ -f /usr/local/bin/speedtest ]; then
-			rm -f /usr/local/bin/speedtest
-			ln -s /usr/bin/speedtest /usr/local/bin/speedtest
+			wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh >/dev/null 2>&1
+			chmod +x /tmp/script.deb.sh
+			os=$os dist=$dist /tmp/script.deb.sh
+			rm -f /tmp/script.deb.sh
+		else
+			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		fi
 	fi
-}
+	local PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
+	apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest-cli- speedtest
+	if [ -f /usr/local/bin/speedtest ]; then
+		rm -f /usr/local/bin/speedtest
+		ln -s /usr/bin/speedtest /usr/local/bin/speedtest
+	fi
 
-install() {
-	echo "$(date) - Installing Speedtest Mod..."
+	echo "$(date) - Installing Latest Speedtest Mod..."
 
-	refresh /opt mod_pihole https://github.com/arevindh/pi-hole
-	refresh /var/www/html admin https://github.com/arevindh/AdminLTE web
+	download /opt mod_pihole https://github.com/arevindh/pi-hole
+	download /var/www/html admin https://github.com/arevindh/AdminLTE web
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
@@ -124,7 +120,9 @@ purge() {
 	rm -rf /var/www/html/*_admin
 	rm -rf /etc/pihole/speedtest.db.*
 	rm -rf /etc/pihole/speedtest.db_*
-	if [ "$(hashFile /etc/pihole/speedtest.db)" == "$(hashFile /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db)" ]; then
+
+	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
+	if [ -f $init_db ] && [ "$(hashFile $init_db)" == "$(hashFile /etc/pihole/speedtest.db)" ]; then
 		rm -f /etc/pihole/speedtest.db
 	fi
 	exit 0
@@ -139,28 +137,10 @@ update() {
 	if [ "${1-}" == "un" ]; then
 		purge
 	fi
+	apt-get update
 }
 
-uninstall() {
-	if cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
-		echo "$(date) - Uninstalling Current Speedtest Mod..."
-
-		if [ ! -f /opt/pihole/webpage.sh.org ]; then
-			if [ ! -d /opt/org_pihole ]; then
-				refresh /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
-			fi
-			cd /opt/org_pihole
-			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-			cd ..
-			rm -rf org_pihole
-		fi
-
-		refresh /var/www/html admin https://github.com/pi-hole/AdminLTE web
-		cd /opt/pihole/
-		mv webpage.sh.org webpage.sh
-		chmod +x webpage.sh
-	fi
-
+manageHistory() {
 	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
 	local curr_db=/etc/pihole/speedtest.db
 	local last_db=/etc/pihole/speedtest.db.old
@@ -173,6 +153,29 @@ uninstall() {
 			mv -f $last_db $curr_db
 		fi
 	fi
+}
+
+uninstall() {
+	if cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
+		echo "$(date) - Uninstalling Current Speedtest Mod..."
+
+		if [ ! -f /opt/pihole/webpage.sh.org ]; then
+			if [ ! -d /opt/org_pihole ]; then
+				download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			fi
+			cd /opt/org_pihole
+			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
+			cd ..
+			rm -rf org_pihole
+		fi
+
+		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
+		cd /opt/pihole/
+		mv webpage.sh.org webpage.sh
+		chmod +x webpage.sh
+	fi
+
+	manageHistory ${1-}
 }
 
 restore() {
@@ -225,13 +228,16 @@ main() {
 	trap '[ "$?" -eq "0" ] && commit || abort $op' EXIT
 
 	local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
-	download $op
-	uninstall $db
 	case $op in
+	db)
+		manageHistory $db
+		;;
 	un)
+		uninstall $db
 		purge
 		;;
 	up)
+		uninstall $db
 		update ${2-}
 		install
 		;;

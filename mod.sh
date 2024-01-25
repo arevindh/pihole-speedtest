@@ -116,7 +116,7 @@ hashFile() {
 }
 
 purge() {
-	echo "$(date) - Removing backups..."
+	echo "$(date) - Cleaning up..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
 	rm -rf /etc/pihole/speedtest.db.*
@@ -126,6 +126,8 @@ purge() {
 	if [ -f $init_db ] && [ "$(hashFile $init_db)" == "$(hashFile /etc/pihole/speedtest.db)" ]; then
 		rm -f /etc/pihole/speedtest.db
 	fi
+
+	pihole -a -su
 	exit 0
 }
 

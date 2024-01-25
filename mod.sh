@@ -167,7 +167,7 @@ uninstall() {
 				download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
 			fi
 			cd /opt
-			cp org_pihole/advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
+			cp org_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.org
 			rm -rf org_pihole
 		fi
 

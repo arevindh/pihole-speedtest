@@ -42,18 +42,26 @@ download() {
 				git fetch --unshallow
 			fi
 		fi
-	elif [ ! -z "$src" ]; then # revert
+	else # replace
 		setTags $dest
-		git remote | grep -q upstream && git remote remove upstream
-		git remote add upstream $url
-		git fetch upstream -q
-		git reset --hard upstream/master
-	else # refresh
-		setTags $dest
+		if [ ! -z "$src" ]; then
+			if [ "$url" != "old" ]; then
+				git config --global --add safe.directory "$dest"
+				git remote -v | grep -q "old" || git remote rename origin old
+				git remote -v | grep -q "origin" && git remote remove origin
+				git remote add origin $url
+			else
+				git remote rename origin new
+				git remote rename old origin
+				git remote remove new
+			fi
+			git fetch origin -q
+		fi
 		git reset --hard origin/master
 	fi
 
 	git -c advice.detachedHead=false checkout $latestTag
+	cd ..
 }
 
 install() {
@@ -96,15 +104,26 @@ install() {
 	echo "$(date) - Installing Latest Speedtest Mod..."
 
 	download /opt mod_pihole https://github.com/arevindh/pi-hole
+	cp pihole/webpage.sh pihole/webpage.sh.org
+	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
+
 	download /var/www/html admin https://github.com/arevindh/AdminLTE web
 	cd /opt
-	cp pihole/webpage.sh pihole/webpage.sh.org
-	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
+	if [ ! -f pihole/webpage.sh.bak ] && [ -f pihole/webpage.sh ]; then
+		cp pihole/webpage.sh pihole/webpage.sh.bak
+	fi
+	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
 	if [ ! -f /etc/pihole/speedtest.db ]; then
-		echo "$(date) - Creating Database..."
-		cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		local last_db=/etc/pihole/speedtest.db.old
+		if [ -f $last_db ]; then
+			echo "$(date) - Restoring Database..."
+			mv $last_db /etc/pihole/
+		else
+			echo "$(date) - Creating Database..."
+			cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		fi
 	fi
 
 	pihole -a -s
@@ -121,12 +140,13 @@ purge() {
 	rm -rf /var/www/html/*_admin
 	rm -rf /etc/pihole/speedtest.db.*
 	rm -rf /etc/pihole/speedtest.db_*
+	rm -rf /opt/mod_pihole
 
 	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
-	if [ -f $init_db ] && [ "$(hashFile $init_db)" == "$(hashFile /etc/pihole/speedtest.db)" ]; then
+	local curr_db=/etc/pihole/speedtest.db
+	if [ -f $init_db ] && [ -f $curr_db ] && [ "$(hashFile $init_db)" == "$(hashFile /etc/pihole/speedtest.db)" ]; then
 		rm -f /etc/pihole/speedtest.db
 	fi
-	exit 0
 }
 
 update() {
@@ -137,6 +157,7 @@ update() {
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "${1-}" == "un" ]; then
 		purge
+		exit 0
 	fi
 }
 
@@ -156,8 +177,14 @@ manageHistory() {
 }
 
 uninstall() {
-	if cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
+	if [ -f /opt/pihole/webpage.sh ] && cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
 		echo "$(date) - Uninstalling Current Speedtest Mod..."
+
+		cd /opt
+		cp pihole/webpage.sh pihole/webpage.sh.mod
+		if [ ! -f /opt/pihole/webpage.sh.bak ]; then
+			cp pihole/webpage.sh pihole/webpage.sh.bak
+		fi
 
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
 			if [ ! -d /opt/org_pihole ]; then
@@ -178,36 +205,37 @@ uninstall() {
 	manageHistory ${1-}
 }
 
-restore() {
-	if [ ! -d /var/www/html/${1}_admin ] || [ ! -f /opt/pihole/webpage.sh.${1} ]; then
-		echo "$(date) - A restore is not needed or one failed."
-	else
-		echo "$(date) - Restoring Files..."
-		cd /var/www/html
-		rm -rf admin
-		mv ${1}_admin admin
-		cd /opt/pihole/
-		mv webpage.sh.${1} webpage.sh
-		echo "$(date) - Files Restored"
-	fi
-}
-
 abort() {
-	echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
-	case ${1-} in
-	up | un | db)
-		restore mod
-		;;
-	*)
-		restore org
-		;;
-	esac
+	echo "$(date) - Process Aborting..." | sudo tee -a /var/log/pimod.log
+
+	if [ -f /opt/pihole/webpage.sh.bak ]; then
+		cp /opt/pihole/webpage.sh.bak /opt/pihole/webpage.sh
+		chmod +x /opt/pihole/webpage.sh
+		rm -f /opt/pihole/webpage.sh.bak
+	fi
+
+	if [ -d /var/www/html/admin/.git/refs/remotes/old ]; then
+		download /var/www/html admin old web
+	fi
+
+	if [ -f /etc/pihole/speedtest.db.old ] && [ ! -f /etc/pihole/speedtest.db ]; then
+		mv /etc/pihole/speedtest.db.old /etc/pihole/speedtest.db
+	fi
+
+	if [ ! -f /opt/pihole/webpage.sh ] || ! cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
+		purge
+	fi
+
 	pihole restartdns
 	echo "$(date) - Please try again or try manually."
 	exit 1
 }
 
 commit() {
+	echo "$(date) - Almost Done..."
+	cd /var/www/html/admin
+	git remote -v | grep -q "old" && git remote remove old
+	rm -f /opt/pihole/webpage.sh.bak
 	pihole restartdns
 	echo "$(date) - Done!"
 	exit 0

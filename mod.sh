@@ -107,6 +107,7 @@ install() {
 		cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 	fi
 
+	pihole -a -s
 	pihole updatechecker local
 }
 

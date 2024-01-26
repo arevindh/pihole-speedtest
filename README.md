@@ -6,36 +6,29 @@ Test your connection speed directly in the Pi-hole web interface!
 
 ![Dashboard](assets/dashboard.png)
 
+This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate `speedtest-cli` if you already have it installed. Should one of these fail, the other will be tried.
+
+> **Notes**
+>
+> * The more tests you run, the more data will be used.
+> * Any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
+
 ## Features
-
-This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests (usually*) using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
-
-* View the results in the web interface (Speedtest Log),
-* Flush the Database, or
-* Restore it until a new speedtest is run.
-
-This limitation is of the script/GUI; you can always manipulate the database directly or export it as a CSV (Speedtest Log > Export As CSV); however, the Mod does also allow you to:
-
-* Install, update, and uninstall it,
-* Set a custom speedtest server,
-* Run tests ad-hoc and/or at set intervals, and
-* Display a pretty line or bar chart on the dashboard of the last 1/2/4/7/30 days of tests.
-
-![Settings](assets/settings.png)
 
 Pull requests and suggestions are welcome!
 
-Please note that the more tests you run, the more data will be used. Also note that any issues relating to inconsistent or inaccurate results should be directed to the speedtest package maintainers, not here.
+* Fast and safe un/re/install script (Mod the Mod)
+* Customizable speedtest server
+* Test ad-hoc and/or on a schedule
+* A pretty line or bar chart on the dashboard
+* View the results and export them as a CSV in the Speedtest Log
+* Flush and restore the database
 
-<sup>
-
-\* While `speedtest` is preferred, by way of being reinstalled every time the Mod is updated, `speedtest-cli` will be tried should it fail. Being Python-based, `speedtest-cli` results may be less consistent or accurate; nevertheless, having it as a fallback is better than nothing.
-
-</sup>
+![Settings](assets/settings.png)
 
 ## Usage
 
-The provided script by @ipitio can un/re/install and update the mod, and manage its history. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
+The provided script by @ipitio can un/re/install and update the mod, and manage its history, for you. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
 
 ### Install
 
@@ -74,8 +67,8 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 Web 5.21
 
 <details>
-
 <summary>Older Notes</summary>
+</br>
 
 **June 8 2023**
 

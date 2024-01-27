@@ -111,10 +111,7 @@ manageHistory() {
 }
 
 notInstalled() {
-    if apt-cache policy $1 | grep -q 'Installed: (none)'; then
-        return 0
-    fi
-    return 1
+    apt-cache policy "$1" | grep 'Installed: (none)' >/dev/null
 }
 
 install() {
@@ -150,18 +147,20 @@ install() {
 
     local PHP_VERSION=$(php -v | head -n 1 | awk '{print $2}' | cut -d "." -f 1,2)
     local packages="bc sqlite3 php${PHP_VERSION}-sqlite3 jq"
+
+    local missing_packages=""
     for package in $packages; do
-        if ! notInstalled $package; then
-            packages=$(echo $packages | sed "s/$package//")
+        if notInstalled "$package"; then
+            missing_packages="$missing_packages $package"
         fi
     done
     if notInstalled speedtest && notInstalled speedtest-cli; then
-        packages="$packages speedtest"
+        missing_packages="$missing_packages speedtest"
     fi
-    if [ ! -z "${packages##*( )}" ]; then
-        apt-get install -y $packages
+    missing_packages=$(echo "$missing_packages" | xargs)
+    if [ ! -z "${missing_packages}" ]; then
+        apt-get install -y $missing_packages
     fi
-
     if [ -f /usr/local/bin/speedtest ]; then
         rm -f /usr/local/bin/speedtest
         ln -s /usr/bin/speedtest /usr/local/bin/speedtest
@@ -235,11 +234,6 @@ update() {
 }
 
 abort() {
-    if (($aborted == 1)); then
-        exit 1
-    fi
-    aborted=1
-
     echo "$(date) - Process Aborting..."
 
     if [ -f $last_wp ]; then
@@ -257,8 +251,11 @@ abort() {
         download $admin_dir admin old web
     fi
 
-    pihole restartdns
-    echo "$(date) - Please try again or try manually."
+    if (($aborted == 0)); then
+        pihole restartdns
+        echo "$(date) - Please try again or try manually."
+    fi
+    aborted=1
     exit 1
 }
 
@@ -286,7 +283,7 @@ main() {
     aborted=0
     set -Eeuo pipefail
     trap '[ "$?" -eq "0" ] && commit || abort' EXIT
-    trap 'abort' INT TERM ERR
+    trap 'abort' INT TERM
 
     local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
     case $op in

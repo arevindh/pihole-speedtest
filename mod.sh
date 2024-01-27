@@ -110,6 +110,13 @@ manageHistory() {
     fi
 }
 
+notInstalled() {
+    if apt-cache policy $1 | grep -q 'Installed: (none)'; then
+        return 0
+    fi
+    return 1
+}
+
 install() {
     echo "$(date) - Installing Latest Speedtest Mod (and any missing dependencies)"
 
@@ -144,14 +151,14 @@ install() {
     local PHP_VERSION=$(php -v | head -n 1 | awk '{print $2}' | cut -d "." -f 1,2)
     local packages="bc sqlite3 php${PHP_VERSION}-sqlite3 jq"
     for package in $packages; do
-        if dpkg -s $package >/dev/null 2>&1; then
+        if ! notInstalled $package; then
             packages=$(echo $packages | sed "s/$package//")
         fi
     done
-    if ! dpkg -s speedtest >/dev/null 2>&1 && ! dpkg -s speedtest-cli >/dev/null 2>&1; then
+    if notInstalled speedtest && notInstalled speedtest-cli; then
         packages="$packages speedtest"
     fi
-    if [ ! -z "$(echo $packages | sed 's/ //g')" ]; then
+    if [ ! -z "${packages##*( )}" ]; then
         apt-get install -y $packages
     fi
 

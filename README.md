@@ -1,10 +1,16 @@
-# Pihole Speedtest
+<div style="text-align: center;">
 
-[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+# Pi-hole Speedtest Mod
 
 Test your connection speed directly in the Pi-hole web interface!
 
+[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+
 ![Dashboard](assets/dashboard.png)
+
+</div>
+
+---
 
 This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate `speedtest-cli` if you already have it installed. Should one of these fail, the other will be tried.
 
@@ -22,7 +28,7 @@ Pull requests and suggestions are welcome!
 * Test ad-hoc and/or on a schedule
 * A pretty line or bar chart on the dashboard
 * View the results and export them as a CSV in the Speedtest Log
-* Flush and restore the database
+* Flush or restore the database
 
 ![Settings](assets/settings.png)
 

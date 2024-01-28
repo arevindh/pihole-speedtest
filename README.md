@@ -23,11 +23,12 @@ This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We rec
 
 Pull requests and suggestions are welcome!
 
-* Fast and safe un/re/install script (Mod the Mod)
 * Customizable speedtest server
-* Test ad-hoc and/or on a schedule
-* A pretty line or bar chart on the dashboard
-* View the results and export them as a CSV in the Speedtest Log
+* Fast and safe un/re/install and update script (Mod the Mod)
+* View output and servers for the above points directly in settings
+* A pretty line or bar chart on the dashboard of any number of days
+* Test ad-hoc and/or on a schedule, with automatic failover
+* View the results and export them as a CSV in the log
 * Flush or restore the database
 
 ![Settings](assets/settings.png)
@@ -38,7 +39,7 @@ The provided script by @ipitio can un/re/install and update the mod, and manage 
 
 ### Install
 
-AKA (Re)Install Latest Mod and only Mod
+Install (or reinstall) the latest version of the Mod and only the Mod.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
@@ -48,7 +49,7 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 
 ### Update
 
-The above, but also updates Pi-hole. This is `(Re)install Latest` in the web interface.
+The above, but also runs Pi-hole's update. This is `(Re)install Latest` in the web interface.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
@@ -58,7 +59,7 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 
 ### Uninstall
 
-The Mod, not Pi-hole!
+The Mod and only the Mod will be removed. Its history will be preserved.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s un

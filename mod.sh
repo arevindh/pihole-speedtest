@@ -99,14 +99,14 @@ manageHistory() {
     if [ "${1-}" == "db" ]; then
         if [ -f $curr_db ] && ! isEmpty $curr_db; then
             if [ -z "${2-}" ]; then
-                echo "$(date) - Flushing Database..."
+                echo "Flushing Database..."
                 mv -f $curr_db $last_db
             fi
         elif [ -f $last_db ]; then
-            echo "$(date) - Restoring Database..."
+            echo "Restoring Database..."
             mv -f $last_db $curr_db
         fi
-        echo "$(date) - Configuring Database..."
+        echo "Configuring Database..."
         sqlite3 "$curr_db" "$create_table"
     fi
 }
@@ -116,16 +116,15 @@ notInstalled() {
 }
 
 install() {
-    echo "$(date) - Installing Latest Speedtest Mod (and any missing dependencies)"
+    echo "Installing Mod..."
 
     if [ ! -f /usr/local/bin/pihole ]; then
-        echo "$(date) - Installing Pi-hole..."
+        echo "Installing Pi-hole..."
         curl -sSL https://install.pi-hole.net | sudo bash
     fi
 
     if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
-        echo "$(date) - Adding speedtest source..."
-        # https://www.speedtest.net/apps/cli
+        echo "Adding speedtest source..."
         if [ -e /etc/os-release ]; then
             . /etc/os-release
             local base="ubuntu debian"
@@ -186,7 +185,7 @@ install() {
 
 uninstall() {
     if [ -f $curr_wp ] && cat $curr_wp | grep -q SpeedTest; then
-        echo "$(date) - Uninstalling Current Speedtest Mod..."
+        echo "Restoring Pi-hole..."
 
         if [ ! -f $org_wp ]; then
             if [ ! -d /opt/org_pihole ]; then
@@ -210,7 +209,6 @@ uninstall() {
 }
 
 purge() {
-    echo "$(date) - Cleaning up..."
     rm -rf "$curr_wp".*
     rm -rf "$admin_dir"*_admin
     rm -rf "$curr_db".*
@@ -223,7 +221,7 @@ purge() {
 }
 
 update() {
-    echo "$(date) - Updating Pi-hole..."
+    echo "Updating Pi-hole..."
     cd $admin_dir/admin
     git reset --hard origin/master
     git checkout master
@@ -235,7 +233,7 @@ update() {
 }
 
 abort() {
-    echo "$(date) - Process Aborting..."
+    echo "Process Aborting..."
 
     if [ -f $last_wp ]; then
         cp $last_wp $curr_wp
@@ -254,24 +252,23 @@ abort() {
 
     if (($aborted == 0)); then
         pihole restartdns
-        echo "$(date) - Please try again or try manually."
+        printf "Please try again or try manually.\n\n$(date)\n"
     fi
     aborted=1
     exit 1
 }
 
 commit() {
-    echo "$(date) - Cleaning Up..."
     cd $admin_dir/admin
     git remote -v | grep -q "old" && git remote remove old
     rm -f $last_wp
     pihole restartdns
-    echo "$(date) - Done!"
+    printf "Done!\n\n$(date)\n"
     exit 0
 }
 
 main() {
-    printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
+    printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n$(date)\n\n"
     local op=${1-}
     if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help

@@ -221,10 +221,6 @@ purge() {
 }
 
 update() {
-    echo "Updating Pi-hole..."
-    cd $admin_dir/admin
-    git reset --hard origin/master
-    git checkout master
     PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
     if [ "${1-}" == "un" ]; then
         purge

@@ -52,11 +52,12 @@ download() {
     local name=$2
     local url=$3
     local src=${4-}
+    local branch=${5-master}
     local dest=$path/$name
     if [ ! -d $dest ]; then # replicate
         cd "$path"
         rm -rf "$name"
-        git clone --depth=1 "$url" "$name"
+        git clone --depth=1 -b "$branch" "$url" "$name"
         setTags "$name" "$src"
         if [ ! -z "$src" ]; then
             if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
@@ -78,7 +79,7 @@ download() {
             fi
             git fetch origin -q
         fi
-        git reset --hard origin/master
+        git reset --hard origin/$branch
     fi
 
     git -c advice.detachedHead=false checkout $latestTag
@@ -221,6 +222,7 @@ purge() {
 }
 
 update() {
+    echo "Updating Pi-hole..."
     PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
     if [ "${1-}" == "un" ]; then
         purge

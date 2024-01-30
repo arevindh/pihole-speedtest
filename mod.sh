@@ -210,12 +210,17 @@ uninstall() {
 }
 
 purge() {
-    rm -rf "$curr_wp".*
     rm -rf "$admin_dir"*_admin
-    rm -rf "$curr_db".*
-    rm -rf "$curr_db"_*
     rm -rf /opt/mod_pihole
+    if [ -f /etc/systemd/system/pihole-speedtest.timer ]; then
+        rm -f /etc/systemd/system/pihole-speedtest.service
+        rm -f /etc/systemd/system/pihole-speedtest.timer
+        systemctl daemon-reload
+    fi
 
+    rm -f "$curr_wp".*
+    rm -f "$curr_db".*
+    rm -f "$curr_db"_*
     if isEmpty $curr_db; then
         rm -f $curr_db
     fi

@@ -47,7 +47,7 @@ The provided script by @ipitio can un/re/install and update the mod, and manage 
 Install (or reinstall) the latest version of the Mod and only the Mod.
 
 ```bash
-curl -sSLN https://github.com/arevindh/AdminLTE/raw/master/scripts/pi-hole/speedtest/mod.sh | sudo bash
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
@@ -57,7 +57,7 @@ curl -sSLN https://github.com/arevindh/AdminLTE/raw/master/scripts/pi-hole/speed
 The above, but also runs Pi-hole's update. This is `(Re)install Latest` in the web interface.
 
 ```bash
-curl -sSLN https://github.com/arevindh/AdminLTE/raw/master/scripts/pi-hole/speedtest/mod.sh | sudo bash -s up
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
@@ -67,7 +67,7 @@ curl -sSLN https://github.com/arevindh/AdminLTE/raw/master/scripts/pi-hole/speed
 The Mod and only the Mod will be removed. Its history will be preserved.
 
 ```bash
-curl -sSLN https://github.com/arevindh/AdminLTE/raw/master/scripts/pi-hole/speedtest/mod.sh | sudo bash -s un
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)

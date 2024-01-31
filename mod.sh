@@ -171,13 +171,14 @@ install() {
     download /var/www/html admin https://github.com/arevindh/AdminLTE web
     if [ -f $curr_wp ]; then
         if ! cat $curr_wp | grep -q SpeedTest; then
-            cp $curr_wp $org_wp
+            cp -a $curr_wp $org_wp
         fi
         if [ ! -f $last_wp ]; then
-            cp $curr_wp $last_wp
+            cp -a $curr_wp $last_wp
         fi
     fi
-    cp /opt/mod_pihole/advanced/Scripts/webpage.sh $curr_wp
+    cp -a /opt/mod_pihole/advanced/Scripts/webpage.sh $curr_wp
+    cp -a /opt/mod_pihole/advanced/Scripts/speedtestmod /opt/pihole/speedtestmod
     chmod +x $curr_wp
     manageHistory db .
     pihole -a -s
@@ -193,16 +194,16 @@ uninstall() {
                 download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
             fi
             cd /opt
-            cp org_pihole/advanced/Scripts/webpage.sh $org_wp
+            cp -a org_pihole/advanced/Scripts/webpage.sh $org_wp
             rm -rf org_pihole
         fi
 
         pihole -a -su
         download /var/www/html admin https://github.com/pi-hole/AdminLTE web
         if [ ! -f $last_wp ]; then
-            cp $curr_wp $last_wp
+            cp -a $curr_wp $last_wp
         fi
-        cp $org_wp $curr_wp
+        cp -a $org_wp $curr_wp
         chmod +x $curr_wp
     fi
 
@@ -239,7 +240,7 @@ abort() {
     echo "Process Aborting..."
 
     if [ -f $last_wp ]; then
-        cp $last_wp $curr_wp
+        cp -a $last_wp $curr_wp
         chmod +x $curr_wp
         rm -f $last_wp
     fi

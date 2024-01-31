@@ -1,62 +1,73 @@
-# Pihole Speedtest
+<div align="center">
 
-[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+# Pi-hole Speedtest Mod
 
 Test your connection speed directly in the Pi-hole web interface!
 
+[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+
 ![Dashboard](assets/dashboard.png)
+
+</div>
+
+---
+
+This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate [`speedtest-cli`](https://github.com/sivel/speedtest-cli) if you already have it installed. Should one of these fail, the other will be tried.
+
+> **Notes**
+>
+> * The more tests you run, the more data will be used.
+> * Any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
 
 ## Features
 
-This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
+Pull requests and suggestions are welcome!
 
-* View the results in the web interface (Speedtest Log),
-* Flush the Database, or
-* Restore it until a new speedtest is run.
-
-This limitation is of the script/GUI; you can always manipulate the database directly or export it as a CSV (Speedtest Log > Export As CSV); however, the Mod does also allow you to:
-
-* Install, update, and uninstall it,
-* Set a custom speedtest server,
-* Run tests ad-hoc and/or at set intervals, and
-* Display a pretty line or bar chart on the dashboard of the last 1/2/4/7/30 days of tests.
+* Customizable speedtest server
+* Fast and safe un/re/install and update script (Mod the Mod)
+* View output and servers for the above points directly in settings
+* A pretty line or bar chart on the dashboard of any number of days
+* Test ad-hoc and/or on a schedule, with automatic failover
+* View the results and export them as a CSV in the log
+* Flush or restore the database
+* Everything is a button — no CLI required*
 
 ![Settings](assets/settings.png)
 
-Pull requests and suggestions are welcome!
-
-Please note that the more tests you run, the more data will be used. Also note that `speedtest-cli` is no longer supported. Any issues relating to it or wonky results will be closed as wontfix and without additional reason or context.
+<sup>
+*Post-install, of course.
+</sup>
 
 ## Usage
 
-The provided script by @ipitio can un/re/install and update the mod, and manage its history. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
+The provided script by @ipitio can un/re/install and update the mod, and manage its history, for you. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
 
 ### Install
 
-AKA (Re)Install Latest Mod and only Mod
+Install (or reinstall) the latest version of the Mod and only the Mod.
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
 ### Update
 
-The above, but also updates Pi-hole. This is `(Re)install Latest` in the web interface.
+The above, but also runs Pi-hole's update. This is `(Re)install Latest` in the web interface.
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ### Uninstall
 
-The Mod, not Pi-hole!
+The Mod and only the Mod will be removed. Its history will be preserved.
 
 ```bash
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s un
+curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
@@ -68,8 +79,8 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 Web 5.21
 
 <details>
-
 <summary>Older Notes</summary>
+</br>
 
 **June 8 2023**
 

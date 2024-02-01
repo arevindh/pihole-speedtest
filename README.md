@@ -35,12 +35,14 @@ Pull requests and suggestions are welcome!
 ![Settings](assets/settings.png)
 
 <sup>
+
 *Post-install, of course.
+
 </sup>
 
 ## Usage
 
-The provided script by @ipitio can un/re/install and update the mod, and manage its history, for you. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
+The Mod Script by @ipitio can un/re/install and update the mod, and manage its history, for you. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
 
 ### Install
 
@@ -74,180 +76,235 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 ## Release Notes
 
-**Dec 9 2023**
+### v2.1
+
+Jan 31 2024 - [Theme changes, UI improvements, and a new settings](https://github.com/arevindh/pihole-speedtest/pull/153)
+
+<details>
+<summary>Older</summary>
+
+### v2.0
+
+Jan 11 2024 - [Refactored Mod Script](https://github.com/arevindh/pihole-speedtest/pull/151)
+
+### v1.9
+
+Feb 11 2023 - [Mod Script and new settings](https://github.com/arevindh/pihole-speedtest/pull/130)
+
+### v1.8
+
+May 18 2022 - [Add CSV export](https://github.com/arevindh/AdminLTE/pull/56)
+
+### v1.7
+
+Mar 17 2022 - [Centered Icon](https://github.com/arevindh/AdminLTE/pull/52)
+
+### v1.6
+
+Feb 21 2022 - [Theme changes and UI improvements](https://github.com/arevindh/AdminLTE/pull/49)
+
+### v1.5
+
+Sep 16 2021 - Disabled Python mode
+
+### v1.4
+
+Oct 09 2020 - Fixed scheduler issues
+
+### v1.3
+
+Jul 29 2020 - Line chart and [displays 0 for failed speedtests](https://github.com/arevindh/pihole-speedtest/issues/43)
+
+### v1.2
+
+Jun 04 2020 - [Added Support for official Speedtest-cli (v5.0.2)](https://github.com/arevindh/AdminLTE/pull/24)
+
+### v1.1
+
+Aug 09 2019 - Support Raspbian Buster
+
+### v1.0
+
+Aug 08 2018 - [Initial Release](https://github.com/arevindh/AdminLTE/pull/11)
+
+### v0.4
+
+Apr 26 2018 - [Handle connection errors](https://github.com/arevindh/AdminLTE/pull/10)
+
+### v0.3
+
+Oct 20 2017 - [Make vertical axis start from 0](https://github.com/arevindh/AdminLTE/pull/2)
+
+### v0.2
+
+Oct 02 2017 - [Run speedtest now](https://github.com/arevindh/pi-hole/pull/1)
+
+### v0.1
+
+Jul 25 2017 - Create chart, settings, functions for speedtest, db
+
+</details>
+
+## Last Sync with Upstream
+
+### Dec 09 2023
 
 Web 5.21
 
 <details>
-<summary>Older Notes</summary>
-</br>
+<summary>History</summary>
 
-**June 8 2023**
+### Jun 08 2023
 
 Pi-hole 5.17.1 FTL 5.23, Web 5.20.1
 
-**Jan 5 2023**
+### Jan 05 2023
 
 Pi-hole 5.14.2 FTL 5.20, Web v5.18
 
 Wishing everyone a very happy New Year!
 
-**Nov 24 2022**
+### Nov 24 2022
 
 Pi-hole 5.14.1 FTL 5.19.1, Web v5.17
 
-**Oct 18 2022**
+### Oct 18 2022
 
 Pi-hole v5.13 FTL v5.18.2, Web v5.16
 
-**Oct 1 2022**
+### Oct 01 2022
 
 Pi-hole 5.12.2 FTL 5.18.1 Admin LTE 5.15.1 , Docker 2022.09.4
 
-**Sept 8 2022**
+### Sep 08 2022
 
 Pi-hole FTL v5.17, Web v5.14.2 and Core v5.12
 
-**Sept 4 2022**
+### Sep 04 2022
 
 Pi-hole FTL v5.17, Web v5.14.1 and Core v5.12
 
-**August 29 2022**
+### Aug 29 2022
 
 Pi-hole docker update
 
-**July 11 2022**
+### Jul 11 2022
 
 Pi-hole core v5.11.4
 
-**July 9 2022**
+### Jul 09 2022
 
 Pi-hole FTL v5.16, Web v5.13 and Core v5.11.3
 
-**April 24 2022**
+### Apr 24 2022
 
 Pi-hole FTL v5.15, Web v5.12 and Core v5.10
 
-**Mar 17 2022**
+### Feb 21 2022
 
-Speedtest mod update fixed [AdminLTE/51](https://github.com/arevindh/AdminLTE/issues/51)
+Pi-hole Web v5.11.1
 
-**Feb 21 2022**
+### Feb 16 2022
 
-Speedtest mod update, Pi-hole Web v5.11.1
+Updated Pi-hole FTL v5.14, Web v5.11 and Core v5.9
 
-**Feb 16 2022**
+### Jan 08 2022
 
-* Updated Pi-hole FTL v5.14, Web v5.11 and Core v5.9
+Updated to Pi-hole v5.8.1 Core / FTL v5.13 / 5.10.1 Web
 
-**Jan 8 2022**
+### Dec 26 2021
 
-* Updated to Pi-hole v5.8.1 Core / FTL v5.13 / 5.10.1 Web
+Updated to pihole 5.7 Core / 5.9 Web
 
-**Dec 26 2021**
+### Oct 24 2021
 
-* Updated to pihole 5.7 Core / 5.9 Web
+Updated to pihole 5.6 Core / 5.8 Web
 
-**Oct 24 2021**
+### Oct 01 2021
 
-* Updated to pihole 5.6 Core / 5.8 Web
+Updated to pihole 5.5 Core / 5.7 Web
 
-**Oct 1 2021**
+### Sep 16 2021
 
-* Updated to pihole 5.5 Core / 5.7 Web
+Updated to pihole 5.4 Core / 5.6 Web
 
-**Sept 16 2021**
+### Apr 15 2021
 
-* Updated to pihole 5.4 Core / 5.6 Web, disabled python mode selection , 'pihole -a -sn'
+Updated to pihole 5.3.1 Core / 5.5 Web
 
-**April 15 2021**
+### Jan 20 2021
 
-* Updated to pihole 5.3.1 Core / 5.5 Web
+Updated to pihole 5.2.4 Core / 5.3.1 Web
 
-**Jan 20 2021**
+### Jan 18 2021
 
-* Updated to pihole 5.2.4 Core / 5.3.1 Web
+Updated to pihole 5.2.3 Core / 5.3 Web
 
-**Jan 18 2021**
+### Dec 25 2020
 
-* Updated to pihole 5.2.3 Core / 5.3 Web
+Updated to pihole V5.2.2
 
-**Dec 25 2020**
+### Dec 04 2020
 
-* Updated to pihole V5.2.2
+Updated to pihole V5.2.1
 
-**Dec 4 2020**
+### Nov 30 2020
 
-* Updated to pihole V5.2.1
+Updated to pihole 5.2(Web) & 5.2(Core)
 
-**Nov 30 2020**
+### Aug 13 2020
 
-* Updated to pihole 5.2(Web) & 5.2(Core)
+Updated to pihole 5.1.1 (Web) & 5.1.2 (Core)
 
-**OCt 9 2020**
+### Jul 20 2020
 
-* Fixed scheduler issues
+Updated to version v5.1
 
-**Aug 13 2020**
+### May 11 2020
 
-* Updated to pihole 5.1.1 (Web) & 5.1.2 (Core)
+Updated to admin version v5.0
 
-**July 29 2020**
+### Feb 26 2020
 
-* New feature : Displays 0 for failed speedtests : [Show failed speedtests as 0?](https://github.com/arevindh/pihole-speedtest/issues/43)
+Updated to admin version v4.3.3
 
-**July 20 2020**
+### Sep 24 2019
 
-* Updated to version v5.1
+Updated to admin version v4.3.2
 
-**June 4 2020**
+### Sep 19 2019
 
-* Added Support for official Speedtest-cli (v5.0.2)
+Updated to core version v4.3.2
 
-**May 11 2020**
+### Jul 02 2019
 
-* Updated to admin version v5.0
+Updated to version v4.3.1
 
-**Feb 26 2020**
+### May 19 2019
 
-* Updated to admin version v4.3.3
+Updated to Pi-hole core, Web v4.3
 
-**Sept 24 2019**
+### Mar 07 2019
 
-* Updated to admin version v4.3.2
+Updated to Pi-hole core v4.2.2
 
-**Sept 19 2019**
+### Feb 14 2019
 
-* Updated to core version v4.3.2
+Updated to Pi-hole core v4.2.1
 
-**July 2 2019**
+### Dec 31 2018
 
-* Updated to version v4.3.1
+Speedtest mod is up to date with Pi-hole v4.1.2
 
-**May 19 2019**
+### Dec 12 2018
 
-* Updated to Pi-hole core, Web v4.3
+Speedtest mod is up to date with Pi-hole v4.1
 
-**Mar 7 2019**
+### Aug 07 2018
 
-* Updated to Pi-hole core v4.2.2
+Speedtest mod is up to date with Pi-hole v4.0
 
-**Feb 14 2019**
-
-* Updated to Pi-hole core v4.2.1
-
-**Dec 31 2018**
-
-* Speedtest mod is up to date with Pi-hole v4.1.2
-
-**Dec 12 2018**
-
-* Speedtest mod is up to date with Pi-hole v4.1
-
-**Aug 7 2018**
-
-* Speedtest mod is up to date with Pi-hole v4.0
-* Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
+Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
 
 </details>
 

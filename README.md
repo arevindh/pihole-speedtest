@@ -85,7 +85,7 @@ Jan 31 2024 - [Theme changes, UI improvements, and a new settings](https://githu
 
 ### v2.0
 
-Jan 11 2024 - [Refactored Mod Script](https://github.com/arevindh/pihole-speedtest/pull/151)
+Jan 22 2024 - [Refactored Mod Script](https://github.com/arevindh/pihole-speedtest/pull/151)
 
 ### v1.9
 

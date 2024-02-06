@@ -4,7 +4,7 @@
 
 Test your connection speed directly in the Pi-hole web interface!
 
-[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
 ![Dashboard](assets/dashboard.png)
 
@@ -21,15 +21,15 @@ This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We rec
 
 ## Features
 
-Pull requests and suggestions are welcome!
+Pull requests and suggestions are welcome. Are you on an unsupported distro? Let us know!
 
-* Customizable speedtest server
+* Supports Debian-based distros with and without `systemd`
 * Fast and safe un/re/install and update script (Mod the Mod)
-* View output and servers for the above points directly in settings
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
 * View the results and export them as a CSV in the log
 * Flush or restore the database
+* Customizable speedtest server
 * Everything is a button — no CLI required*
 
 ![Settings](assets/settings.png)
@@ -48,15 +48,30 @@ The Mod Script by @ipitio can un/re/install and update the mod, and manage its h
 
 Install (or reinstall) the latest version of the Mod and only the Mod.
 
+#### Bare Metal
+
+You can just pipe to bash:
+
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 ```
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
+#### Docker
+
+Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache. For more information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+
+```yaml
+build:
+    dockerfile_inline: |
+        FROM pihole/pihole:latest
+        RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
+```
+
 ### Update
 
-The above, but also runs Pi-hole's update. This is `(Re)install Latest` in the web interface.
+The above, but also runs Pi-hole's update (except in Docker). This is `(Re)install Latest` in the web interface.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
@@ -66,7 +81,7 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 ### Uninstall
 
-The Mod and only the Mod will be removed. Its history will be preserved.
+The Mod and only the Mod will be removed. Its history will be preserved. If you're using Docker, use the button in settings then revert the `build` back to the `image` (or just comment out the `RUN`) so the Mod doesn't reinstall.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
@@ -76,12 +91,16 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 ## Release Notes
 
-### v2.1
+### v2.2
 
-Jan 31 2024 - [Theme changes, UI improvements, and a new settings](https://github.com/arevindh/pihole-speedtest/pull/153)
+Feb 06 2024 - Support systems without `systemd` (Docker)
 
 <details>
 <summary>Older</summary>
+
+### v2.1
+
+Feb 04 2024 - [Theme changes, UI improvements, and a new settings](https://github.com/arevindh/pihole-speedtest/pull/153)
 
 ### v2.0
 

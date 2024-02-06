@@ -93,7 +93,7 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 ### v2.2
 
-Feb 06 2024 - Support systems without `systemd` (Docker)
+Feb 06 2024 - [Support systems without `systemd` (Docker)](https://github.com/arevindh/pihole-speedtest/pull/157)
 
 <details>
 <summary>Older</summary>

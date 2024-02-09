@@ -21,13 +21,14 @@ This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We rec
 
 ## Features
 
-Pull requests and suggestions are welcome. Are you on an unsupported distro? Let us know!
+Pull requests and suggestions are welcome!
 
-* Supports Debian-based distros with and without `systemd`
 * Fast and safe un/re/install and update script (Mod the Mod)
+* Supports Debian, Fedora, and derivatives with and without `systemd`
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
-* View the results and export them as a CSV in the log
+* List the results and export them as a CSV in the log
+* View logs and closest servers in settings
 * Flush or restore the database
 * Customizable speedtest server
 * Everything is a button — no CLI required*
@@ -48,7 +49,8 @@ The Mod Script by @ipitio can un/re/install and update the mod, and manage its h
 
 Install (or reinstall) the latest version of the Mod and only the Mod.
 
-#### Bare Metal
+<details>
+<summary><strong>Bare Metal</strong></summary>
 
 You can just pipe to bash:
 
@@ -58,7 +60,10 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
-#### Docker
+</details>
+
+<details>
+<summary><strong>Docker</strong></summary>
 
 Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache. For more information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
@@ -69,9 +74,16 @@ build:
         RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 ```
 
+</details>
+
 ### Update
 
-The above, but also runs Pi-hole's update (except in Docker). This is `(Re)install Latest` in the web interface.
+This is `(Re)install Latest` in the web interface.
+
+<details>
+<summary><strong>Bare Metal</strong></summary>
+
+The same as the above command, but also runs Pi-hole's update.
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
@@ -79,9 +91,27 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
+</details>
+
+<details>
+<summary><strong>Docker</strong></summary>
+
+When a new version of the Mod is released for the same Pi-hole version, you can update the Mod with the button in settings. If the Mod was updated for a new Pi-hole version, you'll need to rebuild the image without cache, for example:
+
+```bash
+docker compose down; docker compose build --no-cache; docker compose up -d
+```
+
+</details>
+
 ### Uninstall
 
-The Mod and only the Mod will be removed. Its history will be preserved. If you're using Docker, use the button in settings then revert the `build` back to the `image` (or just comment out the `RUN`) so the Mod doesn't reinstall.
+The Mod and only the Mod will be removed. The database will be preserved if it's not empty, but its backup will be deleted; be careful when uninstalling and clearing history.
+
+<details>
+<summary><strong>Bare Metal</strong></summary>
+
+You guessed it:
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
@@ -89,14 +119,29 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 [Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
+</details>
+
+<details>
+<summary><strong>Docker</strong></summary>
+
+Use the button in settings, then revert the `build` back to the `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
+
+```yaml
+build:
+    dockerfile_inline: FROM pihole/pihole:latest
+        # RUN curl -sSLN ...
+```
+
+</details>
+
 ## Release Notes
 
 ### v2.2
 
-Feb 06 2024 - [Support systems without `systemd` (Docker)](https://github.com/arevindh/pihole-speedtest/pull/157)
+Feb 09 2024 - [Docker and Fedora Support](https://github.com/arevindh/pihole-speedtest/pull/157)
 
 <details>
-<summary>Older</summary>
+<summary><strong>Older</strong></summary>
 
 ### v2.1
 
@@ -171,7 +216,7 @@ Jul 25 2017 - Create chart, settings, functions for speedtest, db
 Web 5.21
 
 <details>
-<summary>History</summary>
+<summary><strong>History</strong></summary>
 
 ### Jun 08 2023
 

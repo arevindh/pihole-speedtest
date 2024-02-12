@@ -1,8 +1,8 @@
 <div align="center">
 
-# Pi-hole Speedtest Mod
+# Pi-hole Speedtest
 
-Test your connection speed directly in the Pi-hole web interface!
+## The Speedtest Mod for Pi-hole
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
@@ -12,12 +12,12 @@ Test your connection speed directly in the Pi-hole web interface!
 
 ---
 
-This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate [`speedtest-cli`](https://github.com/sivel/speedtest-cli) if you already have it installed. Should one of these fail, the other will be tried.
+Test your connection speed directly in the Pi-hole web interface! We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate [`speedtest-cli`](https://github.com/sivel/speedtest-cli) if you already have it installed. Should one of these fail, the other will be tried.
 
-> **Notes**
->
-> * The more tests you run, the more data will be used.
-> * Any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
+Please keep in mind that:
+
+* the more tests you run, the more data will be used, and
+* any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
 
 ## Features
 
@@ -47,12 +47,12 @@ The Mod Script by @ipitio can un/re/install and update the mod, and manage its h
 
 ### Install
 
-Install (or reinstall) the latest version of the Mod and only the Mod.
+Install (or reinstall) the latest version of the Mod and only the Mod. For information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
 <details>
-<summary><strong>Bare Metal</strong></summary>
+<summary><strong>Via the Shell</strong></summary>
 
-You can just pipe to bash:
+You can just pipe to bash (inside the Docker container, if you're using it).
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
@@ -63,9 +63,9 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 </details>
 
 <details>
-<summary><strong>Docker</strong></summary>
+<summary><strong>Docker Compose</strong></summary>
 
-Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache. For more information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
 
 ```yaml
 build:
@@ -80,8 +80,11 @@ build:
 
 This is `(Re)install Latest` in the web interface.
 
+> **Docker Note**
+> You should only update via the shell or web if a new version of the Mod is released for the same Pi-hole core version. Neither the script nor the button in settings will run Pi-hole's update in Docker.
+
 <details>
-<summary><strong>Bare Metal</strong></summary>
+<summary><strong>Via the Shell</strong></summary>
 
 The same as the above command, but also runs Pi-hole's update.
 
@@ -94,9 +97,9 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 </details>
 
 <details>
-<summary><strong>Docker</strong></summary>
+<summary><strong>Docker Compose</strong></summary>
 
-When a new version of the Mod is released for the same Pi-hole version, you can update the Mod with the button in settings. If the Mod was updated for a new Pi-hole version, you'll need to rebuild the image without cache, for example:
+You can use the button or the shell, or rebuild the image without cache, for example:
 
 ```bash
 docker compose down; docker compose build --no-cache; docker compose up -d
@@ -109,7 +112,7 @@ docker compose down; docker compose build --no-cache; docker compose up -d
 The Mod and only the Mod will be removed. The database will be preserved if it's not empty, but its backup will be deleted; be careful when uninstalling and clearing history.
 
 <details>
-<summary><strong>Bare Metal</strong></summary>
+<summary><strong>Via the Shell</strong></summary>
 
 You guessed it:
 
@@ -122,9 +125,9 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 </details>
 
 <details>
-<summary><strong>Docker</strong></summary>
+<summary><strong>Docker Compose</strong></summary>
 
-Use the button in settings, then revert the `build` back to the `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
+After using the button in settings, or the shell if you so choose, revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
 
 ```yaml
 build:
@@ -374,6 +377,6 @@ Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will 
 
 ## Buy me a ☕️
 
-Buy me a ☕️ if you like my projects :)
+Buy @arevindh a ☕️ if you like this project :)
 
 <a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>

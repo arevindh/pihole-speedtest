@@ -139,12 +139,16 @@ build:
 
 ## Release Notes
 
-### v2.2
+### v2.2.1
 
-Feb 13 2024 - [Docker and Fedora Support](https://github.com/arevindh/pihole-speedtest/pull/157)
+Feb 13 2024 - [Persist speedtest log](https://github.com/arevindh/pihole-speedtest/pull/159)
 
 <details>
 <summary><strong>Older</strong></summary>
+
+### v2.2
+
+Feb 13 2024 - [Docker and Fedora Support](https://github.com/arevindh/pihole-speedtest/pull/157)
 
 ### v2.1
 

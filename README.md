@@ -52,7 +52,7 @@ Install (or reinstall) the latest version of the Mod and only the Mod. For infor
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
-You can just pipe to bash (inside the Docker container, if you're using it).
+You can just pipe to bash (inside the Docker container, if you're using it (after every rebuild (use Compose))).
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
@@ -141,7 +141,7 @@ build:
 
 ### v2.2.1
 
-Feb 13 2024 - [Persist speedtest log](https://github.com/arevindh/pihole-speedtest/pull/159)
+Feb 17 2024 - [Installation and Testing Enchancements](https://github.com/arevindh/pihole-speedtest/pull/159)
 
 <details>
 <summary><strong>Older</strong></summary>

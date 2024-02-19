@@ -141,7 +141,7 @@ build:
 
 ### v2.2.1
 
-Feb 17 2024 - [Installation and Testing Enchancements](https://github.com/arevindh/pihole-speedtest/pull/159)
+Feb 19 2024 - [Installation and Testing Enhancements](https://github.com/arevindh/pihole-speedtest/pull/159)
 
 <details>
 <summary><strong>Older</strong></summary>

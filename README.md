@@ -52,13 +52,13 @@ Install (or reinstall) the latest version of the Mod and only the Mod. For infor
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
-You can just pipe to bash (inside the Docker container, if you're using it (after every rebuild (use Compose))).
+You can just pipe to bash! If you're using Docker, you'll need to run this command in the container (after every rebuild -- use Compose).
 
 ```bash
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 ```
 
-[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
 
 </details>
 
@@ -92,7 +92,7 @@ The same as the above command, but also runs Pi-hole's update.
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 ```
 
-[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 </details>
 
@@ -120,7 +120,7 @@ You guessed it:
 curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 ```
 
-[Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
+[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
 </details>
 
@@ -141,7 +141,7 @@ build:
 
 ### v2.2.1
 
-Feb 17 2024 - [Installation and Testing Enchancements](https://github.com/arevindh/pihole-speedtest/pull/159)
+Feb 22 2024 - [Streamlined Installation and Testing](https://github.com/arevindh/pihole-speedtest/pull/161)
 
 <details>
 <summary><strong>Older</strong></summary>

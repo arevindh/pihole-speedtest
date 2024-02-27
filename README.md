@@ -12,12 +12,12 @@
 
 ---
 
-Test your connection speed directly in the Pi-hole web interface! We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate [`speedtest-cli`](https://github.com/sivel/speedtest-cli) if you already have it installed. Should one of these fail, the other will be tried.
+Test your connection speed directly in the Pi-hole web interface! We try running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`. Should one of these fail, the others will be tried.
 
 Please keep in mind that:
 
 * the more tests you run, the more data will be used, and
-* any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
+* any issues about weird results should be directed to the maintainers of whichever speedtest package is installed on your system, not here; use `/usr/bin/speedtest --version` to find out which one you have.
 
 ## Features
 
@@ -134,85 +134,6 @@ build:
     dockerfile_inline: FROM pihole/pihole:latest
         # RUN curl -sSLN ...
 ```
-
-</details>
-
-## Release Notes
-
-### v2.2.1
-
-Feb 22 2024 - [Streamlined Installation and Testing](https://github.com/arevindh/pihole-speedtest/pull/161)
-
-<details>
-<summary><strong>Older</strong></summary>
-
-### v2.2
-
-Feb 13 2024 - [Docker and Fedora Support](https://github.com/arevindh/pihole-speedtest/pull/157)
-
-### v2.1
-
-Feb 04 2024 - [Theme changes, UI improvements, and a new settings](https://github.com/arevindh/pihole-speedtest/pull/153)
-
-### v2.0
-
-Jan 22 2024 - [Refactored Mod Script](https://github.com/arevindh/pihole-speedtest/pull/151)
-
-### v1.9
-
-Feb 11 2023 - [Mod Script and new settings](https://github.com/arevindh/pihole-speedtest/pull/130)
-
-### v1.8
-
-May 18 2022 - [Add CSV export](https://github.com/arevindh/AdminLTE/pull/56)
-
-### v1.7
-
-Mar 17 2022 - [Centered Icon](https://github.com/arevindh/AdminLTE/pull/52)
-
-### v1.6
-
-Feb 21 2022 - [Theme changes and UI improvements](https://github.com/arevindh/AdminLTE/pull/49)
-
-### v1.5
-
-Sep 16 2021 - Disabled Python mode
-
-### v1.4
-
-Oct 09 2020 - Fixed scheduler issues
-
-### v1.3
-
-Jul 29 2020 - Line chart and [displays 0 for failed speedtests](https://github.com/arevindh/pihole-speedtest/issues/43)
-
-### v1.2
-
-Jun 04 2020 - [Added Support for official Speedtest-cli (v5.0.2)](https://github.com/arevindh/AdminLTE/pull/24)
-
-### v1.1
-
-Aug 09 2019 - Support Raspbian Buster
-
-### v1.0
-
-Aug 08 2018 - [Initial Release](https://github.com/arevindh/AdminLTE/pull/11)
-
-### v0.4
-
-Apr 26 2018 - [Handle connection errors](https://github.com/arevindh/AdminLTE/pull/10)
-
-### v0.3
-
-Oct 20 2017 - [Make vertical axis start from 0](https://github.com/arevindh/AdminLTE/pull/2)
-
-### v0.2
-
-Oct 02 2017 - [Run speedtest now](https://github.com/arevindh/pi-hole/pull/1)
-
-### v0.1
-
-Jul 25 2017 - Create chart, settings, functions for speedtest, db
 
 </details>
 

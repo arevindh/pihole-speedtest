@@ -28,7 +28,7 @@ Pull requests and suggestions are welcome!
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
 * List the results and export them as a CSV in the log
-* View logs and closest servers in settings
+* View logs and servers in settings
 * Flush or restore the database
 * Customizable speedtest server
 * Everything is a button — no CLI required*

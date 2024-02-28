@@ -1,5 +1,3 @@
-<div align="center">
-
 # Pi-hole Speedtest
 
 ## The Speedtest Mod for Pi-hole
@@ -8,16 +6,14 @@
 
 ![Dashboard](assets/dashboard.png)
 
-</div>
-
 ---
 
-Test your connection speed directly in the Pi-hole web interface! We recommend running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), but will respect your choice to use the potentially less accurate [`speedtest-cli`](https://github.com/sivel/speedtest-cli) if you already have it installed. Should one of these fail, the other will be tried.
+Test your connection speed directly in the Pi-hole web interface! We try running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`. Should one of these fail, the others will be tried.
 
 Please keep in mind that:
 
 * the more tests you run, the more data will be used, and
-* any issues about inconsistent or inaccurate results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
+* any issues about weird results should be directed to the maintainers of whichever speedtest package is installed on your system, not here; use `/usr/bin/speedtest --version` to find out which one you have.
 
 ## Features
 
@@ -28,18 +24,12 @@ Pull requests and suggestions are welcome!
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
 * List the results and export them as a CSV in the log
-* View logs and closest servers in settings
+* View logs and servers in settings
 * Flush or restore the database
 * Customizable speedtest server
-* Everything is a button — no CLI required*
+* Everything is a button — no CLI required after install
 
 ![Settings](assets/settings.png)
-
-<sup>
-
-*Post-install, of course.
-
-</sup>
 
 ## Usage
 
@@ -54,11 +44,7 @@ Install (or reinstall) the latest version of the Mod and only the Mod. For infor
 
 You can just pipe to bash! If you're using Docker, you'll need to run this command in the container (after every rebuild -- use Compose).
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
 </details>
 
@@ -67,12 +53,10 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
 
-```yaml
-build:
-    dockerfile_inline: |
-        FROM pihole/pihole:latest
-        RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
-```
+    build:
+        dockerfile_inline: |
+            FROM pihole/pihole:latest
+            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
 </details>
 
@@ -88,11 +72,7 @@ This is `(Re)install Latest` in the web interface.
 
 The same as the above command, but also runs Pi-hole's update.
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 
 </details>
 
@@ -101,9 +81,7 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 You can use the button or the shell, or rebuild the image without cache, for example:
 
-```bash
-docker compose down; docker compose build --no-cache; docker compose up -d
-```
+    docker compose down; docker compose build --no-cache; docker compose up -d
 
 </details>
 
@@ -116,11 +94,7 @@ The Mod and only the Mod will be removed. The database will be preserved if it's
 
 You guessed it:
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 
 </details>
 
@@ -129,90 +103,9 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 After using the button in settings, or the shell if you so choose, revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
 
-```yaml
-build:
-    dockerfile_inline: FROM pihole/pihole:latest
-        # RUN curl -sSLN ...
-```
-
-</details>
-
-## Release Notes
-
-### v2.2.1
-
-Feb 22 2024 - [Streamlined Installation and Testing](https://github.com/arevindh/pihole-speedtest/pull/161)
-
-<details>
-<summary><strong>Older</strong></summary>
-
-### v2.2
-
-Feb 13 2024 - [Docker and Fedora Support](https://github.com/arevindh/pihole-speedtest/pull/157)
-
-### v2.1
-
-Feb 04 2024 - [Theme changes, UI improvements, and a new settings](https://github.com/arevindh/pihole-speedtest/pull/153)
-
-### v2.0
-
-Jan 22 2024 - [Refactored Mod Script](https://github.com/arevindh/pihole-speedtest/pull/151)
-
-### v1.9
-
-Feb 11 2023 - [Mod Script and new settings](https://github.com/arevindh/pihole-speedtest/pull/130)
-
-### v1.8
-
-May 18 2022 - [Add CSV export](https://github.com/arevindh/AdminLTE/pull/56)
-
-### v1.7
-
-Mar 17 2022 - [Centered Icon](https://github.com/arevindh/AdminLTE/pull/52)
-
-### v1.6
-
-Feb 21 2022 - [Theme changes and UI improvements](https://github.com/arevindh/AdminLTE/pull/49)
-
-### v1.5
-
-Sep 16 2021 - Disabled Python mode
-
-### v1.4
-
-Oct 09 2020 - Fixed scheduler issues
-
-### v1.3
-
-Jul 29 2020 - Line chart and [displays 0 for failed speedtests](https://github.com/arevindh/pihole-speedtest/issues/43)
-
-### v1.2
-
-Jun 04 2020 - [Added Support for official Speedtest-cli (v5.0.2)](https://github.com/arevindh/AdminLTE/pull/24)
-
-### v1.1
-
-Aug 09 2019 - Support Raspbian Buster
-
-### v1.0
-
-Aug 08 2018 - [Initial Release](https://github.com/arevindh/AdminLTE/pull/11)
-
-### v0.4
-
-Apr 26 2018 - [Handle connection errors](https://github.com/arevindh/AdminLTE/pull/10)
-
-### v0.3
-
-Oct 20 2017 - [Make vertical axis start from 0](https://github.com/arevindh/AdminLTE/pull/2)
-
-### v0.2
-
-Oct 02 2017 - [Run speedtest now](https://github.com/arevindh/pi-hole/pull/1)
-
-### v0.1
-
-Jul 25 2017 - Create chart, settings, functions for speedtest, db
+    build:
+        dockerfile_inline: FROM pihole/pihole:latest
+            # RUN curl -sSLN ...
 
 </details>
 

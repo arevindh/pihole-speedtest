@@ -1,5 +1,3 @@
-<div align="center">
-
 # Pi-hole Speedtest
 
 ## The Speedtest Mod for Pi-hole
@@ -7,8 +5,6 @@
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
 ![Dashboard](assets/dashboard.png)
-
-</div>
 
 ---
 
@@ -31,15 +27,9 @@ Pull requests and suggestions are welcome!
 * View logs and servers in settings
 * Flush or restore the database
 * Customizable speedtest server
-* Everything is a button — no CLI required*
+* Everything is a button — no CLI required after install
 
 ![Settings](assets/settings.png)
-
-<sup>
-
-*Post-install, of course.
-
-</sup>
 
 ## Usage
 

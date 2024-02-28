@@ -44,11 +44,7 @@ Install (or reinstall) the latest version of the Mod and only the Mod. For infor
 
 You can just pipe to bash! If you're using Docker, you'll need to run this command in the container (after every rebuild -- use Compose).
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Installing-Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
 </details>
 
@@ -57,12 +53,10 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
 
-```yaml
-build:
-    dockerfile_inline: |
-        FROM pihole/pihole:latest
-        RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
-```
+    build:
+        dockerfile_inline: |
+            FROM pihole/pihole:latest
+            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
 </details>
 
@@ -78,11 +72,7 @@ This is `(Re)install Latest` in the web interface.
 
 The same as the above command, but also runs Pi-hole's update.
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 
 </details>
 
@@ -91,9 +81,7 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 You can use the button or the shell, or rebuild the image without cache, for example:
 
-```bash
-docker compose down; docker compose build --no-cache; docker compose up -d
-```
+    docker compose down; docker compose build --no-cache; docker compose up -d
 
 </details>
 
@@ -106,11 +94,7 @@ The Mod and only the Mod will be removed. The database will be preserved if it's
 
 You guessed it:
 
-```bash
-curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
-```
-
-[Old Manual Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 
 </details>
 
@@ -119,11 +103,9 @@ curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speed
 
 After using the button in settings, or the shell if you so choose, revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
 
-```yaml
-build:
-    dockerfile_inline: FROM pihole/pihole:latest
-        # RUN curl -sSLN ...
-```
+    build:
+        dockerfile_inline: FROM pihole/pihole:latest
+            # RUN curl -sSLN ...
 
 </details>
 

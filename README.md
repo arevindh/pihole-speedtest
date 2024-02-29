@@ -13,7 +13,7 @@ Test your connection speed directly in the Pi-hole web interface! We try running
 Please keep in mind that:
 
 * the more tests you run, the more data will be used, and
-* any issues about weird results should be directed to the maintainers of whichever speedtest package is installed on your system, not here; use `/usr/bin/speedtest --version` to find out which one you have.
+* any issues about weird results should be directed to the maintainers of whichever speedtest package is installed on your system, not here.
 
 ## Features
 

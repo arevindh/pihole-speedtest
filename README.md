@@ -39,6 +39,9 @@ The Mod Script by @ipitio can un/re/install and update the mod, and manage its h
 
 Install (or reinstall) the latest version of the Mod and only the Mod. For information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
+> **Docker Note**
+> Please wait a minute after installing until you start looking for issues.
+
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
@@ -65,12 +68,12 @@ Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, 
 This is `(Re)install Latest` in the web interface.
 
 > **Docker Note**
-> You should only update via the shell or web if a new version of the Mod is released for the same Pi-hole core version. Neither the script nor the button in settings will run Pi-hole's update in Docker.
+> You will need to rebuild the image without cache if there's a new official Pi-hole release that you want to get.
 
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
-The same as the above command, but also runs Pi-hole's update.
+The same as the above command, but also runs Pi-hole's update if not in Docker.
 
     curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 
@@ -89,6 +92,9 @@ You can use the button or the shell, or rebuild the image without cache, for exa
 
 The Mod and only the Mod will be removed. The database will be preserved if it's not empty, but its backup will be deleted; be careful when uninstalling and clearing history.
 
+> **Docker Note**
+> We recommend using the button in settings.
+
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
@@ -101,7 +107,7 @@ You guessed it:
 <details>
 <summary><strong>Docker Compose</strong></summary>
 
-After using the button in settings, or the shell if you so choose, revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
+First use the button in settings, or the shell if you so choose, then revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
 
     build:
         dockerfile_inline: FROM pihole/pihole:latest

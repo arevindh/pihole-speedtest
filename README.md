@@ -4,7 +4,7 @@
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
-![Dashboard](assets/dashboard.png)
+![Speedtest Chart](https://raw.githubusercontent.com/arevindh/AdminLTE/master/img/st-chart.png)
 
 ---
 
@@ -19,25 +19,21 @@ Please keep in mind that:
 
 Pull requests and suggestions are welcome!
 
-* Fast and safe un/re/install and update script (Mod the Mod)
-* Supports Debian, Fedora, and derivatives with and without `systemd`
+* Easy un/re/install and update with the Mod Script
+* Everything is a button — no CLI required after install
+* Supports Debian, Fedora, and derivatives with and without `systemd` (Docker too!)
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
-* List the results and export them as a CSV in the log
-* View logs and servers in settings
+* List the results and export them as a CSV file in the log
+* View status, log, and servers in settings
 * Flush or restore the database
 * Customizable speedtest server
-* Everything is a button — no CLI required after install
 
-![Settings](assets/settings.png)
+![Speedtest Settings](https://raw.githubusercontent.com/arevindh/AdminLTE/master/img/st-pref.png)
 
-## Usage
+## Installing
 
-The Mod Script by @ipitio can un/re/install and update the mod, and manage its history, for you. It accepts up to three arguments: any, all, or none of `up`, `un`, and `db`. They must be in that order; check usage for details. Its functionality is available via the web interface as well (Settings > Speedtest).
-
-### Install
-
-Install (or reinstall) the latest version of the Mod and only the Mod. For information about Pi-hole in Docker, including an example, please refer to their [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+To install (or reinstall) the latest version of the Mod and only the Mod, please use our Mod Script, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
 > **Docker Note**
 > Please wait a minute after installing until you start looking for issues.
@@ -63,9 +59,9 @@ Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, 
 
 </details>
 
-### Update
+## Updating
 
-This is `(Re)install Latest` in the web interface.
+You can use the `(Re)install Latest` button in the web interface's speedtest settings, or one of the following methods, to update the Mod along with Pi-hole.
 
 > **Docker Note**
 > You will need to rebuild the image without cache if there's a new official Pi-hole release that you want to get.
@@ -73,7 +69,7 @@ This is `(Re)install Latest` in the web interface.
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
-The same as the above command, but also runs Pi-hole's update if not in Docker.
+The same as the install command, but also runs Pi-hole's update if not in Docker.
 
     curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
 
@@ -82,23 +78,20 @@ The same as the above command, but also runs Pi-hole's update if not in Docker.
 <details>
 <summary><strong>Docker Compose</strong></summary>
 
-You can use the button or the shell, or rebuild the image without cache, for example:
+You can use the button or the shell! You can also rebuild the image without cache, for example:
 
     docker compose down; docker compose build --no-cache; docker compose up -d
 
 </details>
 
-### Uninstall
+## Uninstalling
 
 The Mod and only the Mod will be removed. The database will be preserved if it's not empty, but its backup will be deleted; be careful when uninstalling and clearing history.
-
-> **Docker Note**
-> We recommend using the button in settings.
 
 <details>
 <summary><strong>Via the Shell</strong></summary>
 
-You guessed it:
+You can use the button in settings or run this command in the shell.
 
     curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
 
@@ -107,7 +100,7 @@ You guessed it:
 <details>
 <summary><strong>Docker Compose</strong></summary>
 
-First use the button in settings, or the shell if you so choose, then revert the `build` back to an `image` so the Mod doesn't reinstall on the next rebuild. You can also comment out the `RUN` line:
+First use the button in settings, or the shell if you so choose, then revert the `build` back to an `image` to prevent the Mod from being reinstalled on the next rebuild. You can also comment out the `RUN` line:
 
     build:
         dockerfile_inline: FROM pihole/pihole:latest

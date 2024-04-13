@@ -33,47 +33,25 @@ Pull requests and suggestions are welcome!
 
 ## Installing
 
-To install (or reinstall) the latest version of the Mod and only the Mod, please use our Mod Script, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+Please use our Mod Script to install the latest version of the Mod, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki/The-Mod-Script). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
 > **Docker Note**
-> You'll need to run the bash script from within the container after every rebuild if you're not using Compose.
+> You'll need to run the bash script inside the container after every rebuild if you're not using Compose.
 
-<details>
-<summary><strong>Via the Shell</strong></summary>
+### Via the Shell
 
 You can just pipe to bash!
 
-    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s
+    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
-</details>
-
-<details>
-<summary><strong>Docker Compose</strong></summary>
+### Docker Compose
 
 Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
 
     build:
         dockerfile_inline: |
             FROM pihole/pihole:latest
-            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s
-
-</details>
-
-### Your Options
-
-* `up, update` - also update Pi-hole, unless Systemd is not being used (ie. not in Docker)"
-* `ba, backup` - preserve stock Pi-hole files for faster offline restore
-* `on, online` - force online restore of stock Pi-hole files even if a backup exists
-* `in, install` - skip restore of stock Pi-hole (for when not updating Pi-hole nor switching repos)
-* `re, reinstall` - keep current version of the mod, if installed
-* `un, uninstall` - remove the mod and its files, but keep the database
-* `db, database` - flush/restore the database if it's not/empty (and exit if this is the only arg given)
-
-### Usage Examples
-
-* `sudo bash -s up ba on` - restore stock files online, update Pi-hole, backup stock files, and (re)install the latest version of the mod
-* `sudo bash -s install` - (re)install the latest version of the mod without restoring stock files first
-* `sudo bash -s in re db` - reinstall the current version of the mod without restoring stock files first and flush/restore the database
+            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
 ## Buy me a ☕️
 

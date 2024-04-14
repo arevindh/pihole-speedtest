@@ -33,22 +33,18 @@ Pull requests and suggestions are welcome!
 
 ## Installing
 
-To install (or reinstall) the latest version of the Mod and only the Mod, please use our Mod Script, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+Please use our Mod Script to install the latest version of the Mod, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki/The-Mod-Script). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
 > **Docker Note**
-> Please wait a minute after installing until you start looking for issues.
+> You'll need to run the bash script inside the container after every rebuild if you're not using Compose.
 
-<details>
-<summary><strong>Via the Shell</strong></summary>
+### Via the Shell
 
-You can just pipe to bash! If you're using Docker, you'll need to run this command in the container (after every rebuild -- use Compose).
+You can just pipe to bash!
 
     curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
-</details>
-
-<details>
-<summary><strong>Docker Compose</strong></summary>
+### Docker Compose
 
 Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
 
@@ -56,220 +52,6 @@ Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, 
         dockerfile_inline: |
             FROM pihole/pihole:latest
             RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
-
-</details>
-
-## Updating
-
-You can use the `(Re)install Latest` button in the web interface's speedtest settings, or one of the following methods, to update the Mod along with Pi-hole.
-
-> **Docker Note**
-> You will need to rebuild the image without cache if there's a new official Pi-hole release that you want to get.
-
-<details>
-<summary><strong>Via the Shell</strong></summary>
-
-The same as the install command, but also runs Pi-hole's update if not in Docker.
-
-    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s up
-
-</details>
-
-<details>
-<summary><strong>Docker Compose</strong></summary>
-
-You can use the button or the shell! You can also rebuild the image without cache, for example:
-
-    docker compose down; docker compose build --no-cache; docker compose up -d
-
-</details>
-
-## Uninstalling
-
-The Mod and only the Mod will be removed. The database will be preserved if it's not empty, but its backup will be deleted; be careful when uninstalling and clearing history.
-
-<details>
-<summary><strong>Via the Shell</strong></summary>
-
-You can use the button in settings or run this command in the shell.
-
-    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash -s un
-
-</details>
-
-<details>
-<summary><strong>Docker Compose</strong></summary>
-
-First use the button in settings, or the shell if you so choose, then revert the `build` back to an `image` to prevent the Mod from being reinstalled on the next rebuild. You can also comment out the `RUN` line:
-
-    build:
-        dockerfile_inline: FROM pihole/pihole:latest
-            # RUN curl -sSLN ...
-
-</details>
-
-## Last Sync with Upstream
-
-### Dec 09 2023
-
-Web 5.21
-
-<details>
-<summary><strong>History</strong></summary>
-
-### Jun 08 2023
-
-Pi-hole 5.17.1 FTL 5.23, Web 5.20.1
-
-### Jan 05 2023
-
-Pi-hole 5.14.2 FTL 5.20, Web v5.18
-
-Wishing everyone a very happy New Year!
-
-### Nov 24 2022
-
-Pi-hole 5.14.1 FTL 5.19.1, Web v5.17
-
-### Oct 18 2022
-
-Pi-hole v5.13 FTL v5.18.2, Web v5.16
-
-### Oct 01 2022
-
-Pi-hole 5.12.2 FTL 5.18.1 Admin LTE 5.15.1 , Docker 2022.09.4
-
-### Sep 08 2022
-
-Pi-hole FTL v5.17, Web v5.14.2 and Core v5.12
-
-### Sep 04 2022
-
-Pi-hole FTL v5.17, Web v5.14.1 and Core v5.12
-
-### Aug 29 2022
-
-Pi-hole docker update
-
-### Jul 11 2022
-
-Pi-hole core v5.11.4
-
-### Jul 09 2022
-
-Pi-hole FTL v5.16, Web v5.13 and Core v5.11.3
-
-### Apr 24 2022
-
-Pi-hole FTL v5.15, Web v5.12 and Core v5.10
-
-### Feb 21 2022
-
-Pi-hole Web v5.11.1
-
-### Feb 16 2022
-
-Updated Pi-hole FTL v5.14, Web v5.11 and Core v5.9
-
-### Jan 08 2022
-
-Updated to Pi-hole v5.8.1 Core / FTL v5.13 / 5.10.1 Web
-
-### Dec 26 2021
-
-Updated to pihole 5.7 Core / 5.9 Web
-
-### Oct 24 2021
-
-Updated to pihole 5.6 Core / 5.8 Web
-
-### Oct 01 2021
-
-Updated to pihole 5.5 Core / 5.7 Web
-
-### Sep 16 2021
-
-Updated to pihole 5.4 Core / 5.6 Web
-
-### Apr 15 2021
-
-Updated to pihole 5.3.1 Core / 5.5 Web
-
-### Jan 20 2021
-
-Updated to pihole 5.2.4 Core / 5.3.1 Web
-
-### Jan 18 2021
-
-Updated to pihole 5.2.3 Core / 5.3 Web
-
-### Dec 25 2020
-
-Updated to pihole V5.2.2
-
-### Dec 04 2020
-
-Updated to pihole V5.2.1
-
-### Nov 30 2020
-
-Updated to pihole 5.2(Web) & 5.2(Core)
-
-### Aug 13 2020
-
-Updated to pihole 5.1.1 (Web) & 5.1.2 (Core)
-
-### Jul 20 2020
-
-Updated to version v5.1
-
-### May 11 2020
-
-Updated to admin version v5.0
-
-### Feb 26 2020
-
-Updated to admin version v4.3.3
-
-### Sep 24 2019
-
-Updated to admin version v4.3.2
-
-### Sep 19 2019
-
-Updated to core version v4.3.2
-
-### Jul 02 2019
-
-Updated to version v4.3.1
-
-### May 19 2019
-
-Updated to Pi-hole core, Web v4.3
-
-### Mar 07 2019
-
-Updated to Pi-hole core v4.2.2
-
-### Feb 14 2019
-
-Updated to Pi-hole core v4.2.1
-
-### Dec 31 2018
-
-Speedtest mod is up to date with Pi-hole v4.1.2
-
-### Dec 12 2018
-
-Speedtest mod is up to date with Pi-hole v4.1
-
-### Aug 07 2018
-
-Speedtest mod is up to date with Pi-hole v4.0
-
-Pi-hole v4.0 released on 2018-08-06. Speedtest mod integration is going on will take approx 3 to 5 days.
-
-</details>
 
 ## Buy me a ☕️
 

@@ -33,10 +33,10 @@ Pull requests and suggestions are welcome!
 
 ## Installing
 
-Please use our Mod Script to install the latest version of the Mod, which automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki/The-Mod-Script). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+Please use our Mod Script to install the latest version of the Mod; it automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
 > **Docker Note**
-> You'll need to run the bash script inside the container after every rebuild if you're not using Compose.
+> You'll need to run the script inside every new container if you're not using Compose.
 
 ### Via the Shell
 

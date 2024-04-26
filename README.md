@@ -35,18 +35,27 @@ Pull requests and suggestions are welcome!
 
 Please use our Mod Script to install the latest version of the Mod; it automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
-> **Docker Note**
-> You'll need to run the script inside every new container if you're not using Compose.
-
 ### Via the Shell
 
-You can just pipe to bash!
+You can just pipe to bash:
 
     curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
-### Docker Compose
+### With Docker
 
-Replace `image: pihole/pihole:latest` with the following in your `compose.yml`, then rebuild without cache.
+Simply change the image you're using to our modded one:
+
+    ghcr.io/ipitio/pihole-speedtest:latest
+
+#### Compose
+
+Choose one of the following options:
+
+* Change the `image: ...` line to point to our image,
+* Replace it with the following and rebuild without cache, or
+* Run the Mod Script manually inside every new container.
+
+The last option is not recommended.
 
     build:
         dockerfile_inline: |

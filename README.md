@@ -33,7 +33,9 @@ Pull requests and suggestions are welcome!
 
 ## Installing
 
-Please use our Mod Script to install the latest version of the Mod; it automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. To see available options, please look at the [wiki](https://github.com/arevindh/pihole-speedtest/wiki). For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+Please use our Mod Script to install the latest version of the Mod; it automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+
+Further Instructions: [Updating](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod) | [Uninstalling](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
 ### Via the Shell
 
@@ -43,7 +45,7 @@ You can just pipe to bash:
 
 ### With Docker
 
-Simply change the image you're using to our modded one and proceed as usual.
+Simply change the image you're using to our modded one and proceed as usual. It's a drop-in replacement.
 
     ghcr.io/arevindh/pihole-speedtest:latest
 
@@ -54,9 +56,9 @@ You can also run the Mod Script inside every new container yourself. For example
             FROM pihole/pihole:latest
             RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
 
-and rebuilding without cache:
+Then pull and rebuild without cache:
 
-    docker compose down; docker compose build --no-cache; docker compose up -d
+    docker compose pull; docker compose down; docker compose build --no-cache; docker compose up -d
 
 ## Buy me a ☕️
 

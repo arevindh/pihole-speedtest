@@ -43,19 +43,11 @@ You can just pipe to bash:
 
 ### With Docker
 
-Simply change the image you're using to our modded one:
+Simply change the image you're using to our modded one and proceed as usual.
 
-    ghcr.io/ipitio/pihole-speedtest:latest
+    ghcr.io/arevindh/pihole-speedtest:latest
 
-#### Compose
-
-Choose one of the following options:
-
-* Change the `image: ...` line to point to our image,
-* Replace it with the following and rebuild without cache, or
-* Run the Mod Script manually inside every new container.
-
-The last option is not recommended.
+If you're using Compose, you may also run the Mod Script inside every new container yourself. For example, by replacing the `image` line with the following and rebuilding without cache.
 
     build:
         dockerfile_inline: |

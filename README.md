@@ -47,12 +47,16 @@ Simply change the image you're using to our modded one and proceed as usual.
 
     ghcr.io/arevindh/pihole-speedtest:latest
 
-If you're using Compose, you may also run the Mod Script inside every new container yourself. For example, by replacing the `image` line with the following and rebuilding without cache.
+You can also run the Mod Script inside every new container yourself. For example, if you're using Compose, by replacing the `image` line with:
 
     build:
         dockerfile_inline: |
             FROM pihole/pihole:latest
             RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
+
+and rebuilding without cache:
+
+    docker compose down; docker compose build --no-cache; docker compose up -d
 
 ## Buy me a ☕️
 

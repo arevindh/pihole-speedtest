@@ -1,2 +1,2 @@
 FROM pihole/pihole:latest
-RUN curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/mod | sudo bash
+RUN curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/mod | sudo bash

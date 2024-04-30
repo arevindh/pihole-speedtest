@@ -8,7 +8,7 @@
 
 ---
 
-Test your connection speed directly in the Pi-hole web interface! We try running speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`. Should one of these fail, the others will be tried.
+Test your connection speed directly in the Pi-hole web UI! We try running speedtests using [Ookla's official `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`, such as by selecting them with the `-s` option of the [Mod Script](https://github.com/arevindh/pihole-speedtest/wiki). Should any of these fail, the others will be tried.
 
 Please keep in mind that:
 
@@ -20,7 +20,6 @@ Please keep in mind that:
 Pull requests and suggestions are welcome!
 
 * Easy un/re/install and update with the Mod Script
-* Everything is a button — no CLI required after install
 * Supports Debian, Fedora, and derivatives with and without `systemd` (Docker too!)
 * A pretty line or bar chart on the dashboard of any number of days
 * Test ad-hoc and/or on a schedule, with automatic failover
@@ -35,13 +34,15 @@ Pull requests and suggestions are welcome!
 
 Please use our Mod Script to install the latest version of the Mod; it automates the process of swapping Pi-hole's repos to our modded ones and ensures this is done efficiently. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
 
-Further Instructions: [Updating](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod) | [Uninstalling](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
+> **Note:** If you don't specify the `-s` option and don't have a speedtest package installed, Ookla's CLI will be installed when the first test runs.
+
+Further Instructions: [Updating](https://github.com/arevindh/pihole-speedtest/wiki/Updating-Speedtest-Mod) | [Uninstalling](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
 ### Via the Shell
 
 You can just pipe to bash:
 
-    curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
+    curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/mod | sudo bash
 
 ### With Docker
 
@@ -54,7 +55,7 @@ You can also run the Mod Script inside every new container yourself. For example
     build:
         dockerfile_inline: |
             FROM pihole/pihole:latest
-            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
+            RUN curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/mod | sudo bash
 
 Then pull and rebuild without cache:
 
@@ -65,3 +66,5 @@ Then pull and rebuild without cache:
 Buy @arevindh a ☕️ if you like this project :)
 
 <a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+@ipitio is not accepting donations at this time, but a star is always appreciated!

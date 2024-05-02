@@ -1,4 +1,4 @@
-name: ghcr.io build
+name: build
 
 on:
   release:

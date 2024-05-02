@@ -1,22 +1,22 @@
 # Pi-hole Speedtest
 
-## Speedtest Mod for Pi-hole
-
 ![Speedtest Chart](https://raw.githubusercontent.com/arevindh/AdminLTE/master/img/st-chart.png)
 
-[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
+[![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM) [![Docker Build](https://github.com/arevindh/pihole-speedtest/actions/workflows/publish.yml/badge.svg)](https://github.com/arevindh/pihole-speedtest/actions/workflows/publish.yml)
 
-[![Docker Build](https://github.com/ipitio/pihole-speedtest/actions/workflows/publish.yml/badge.svg)](https://github.com/ipitio/pihole-speedtest/actions/workflows/publish.yml)
+This project is a few things, the major parts being a Pi-hole extension and a speedtest runner. Install the Speedtest Mod in a breeze with the one-liners and Docker images [below](https://github.com/arevindh/pihole-speedtest?tab=readme-ov-file#installing).
 
-Run speedtests right from the Pi-hole web UI! Install, set a testing interval, customize the chart, kick back, and watch the results come in on the Dashboard.
+## The Runner
 
-Our installation manager, the Mod Script, automates the process of (un)applying our patches. It supports Debian, Fedora, and derivatives with and without `systemd`. Docker, too! You can use it to quickly try out the Mod and uninstall it if you don't like it. More on the Script below. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/).
+The Test Script is a standalone tool that can be used to run speedtests on automated Debian or Fedora based systems. It will install a speedtest CLI if one hasn't been, run a test, and save the results to a new or existing database. You can use it to test your connection, monitor your ISP, or check the speed of your VPN. Let us know how you're using it! See usage for details.
+
+    curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/test | sudo bash -s -- -o ~/speedtest.db
 
 Please keep in mind that the more tests you run, the more data will be used, and any issues about weird results should be directed to the maintainers of whichever speedtest CLI is installed on your system, not here.
 
-## More Features
+## The Extension
 
-Pull requests and suggestions are welcome!
+The Mod allows you to use the Test Script and run speedtests right from the Pi-hole web UI! Install, set a testing interval and customize the chart in Settings, kick back, and watch the results come in on the Dashboard. Other features include:
 
 * Run tests ad-hoc
 * Export data as CSV
@@ -26,19 +26,19 @@ Pull requests and suggestions are welcome!
 
 ![Speedtest Settings](https://raw.githubusercontent.com/arevindh/AdminLTE/master/img/st-pref.png)
 
-## Installing
+### Installing
 
-The Mod Script applies our changes to your Pi-hole installation, installing the necessary dependencies and setting up the web interface. It also allows you to update Pi-hole or to uninstall the Mod and revert to the original state.
+The Mod Script is our installation manager; it automates the process of applying our patches. It supports Debian, Fedora, and derivatives with and without `systemd`. Docker, too! You can use it to quickly try out the Mod and uninstall it if you don't like it. For information about running Pi-hole in Docker, including a Compose example, please refer to the official [repo](https://github.com/pi-hole/docker-pi-hole/) and [docs](https://docs.pi-hole.net/). Post-install instructions are [below](https://github.com/arevindh/pihole-speedtest?tab=readme-ov-file#post-install).
 
-### Via the Shell
+#### Via the Shell
 
 You can just pipe to bash:
 
     curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/mod | sudo bash
 
-### With Docker
+#### With Docker
 
-The above goes for Docker, too! We use the Dockerfile in this repo to build an image with the Mod Script already applied. Simply change the image you're using to ours and proceed as usual. It's a drop-in replacement.
+The above goes for Docker as well. We use the Dockerfile in this repo to build an image with the Mod Script already applied. Simply change the image you're using to ours and proceed as usual. It's a drop-in replacement.
 
     ghcr.io/arevindh/pihole-speedtest:latest
 
@@ -53,9 +53,9 @@ Then pull and rebuild without cache:
 
     docker compose pull; docker compose down; docker compose build --no-cache; docker compose up -d
 
-## Post Install
+### Post Install
 
-After installation, the Mod will mediately install [Ookla's official `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed-cli`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`. You can install and switch between all of these with the `-s` option. Please refer to our [wiki](https://github.com/arevindh/pihole-speedtest/wiki) to see how to use this option and what others are available. Should any of the CLI packages fail at runtime, the others will be tried.
+After installation, the Mod will use the Test Script to mediately install [Ookla's official `speedtest`](https://www.speedtest.net/apps/cli), unless you already have [`speedtest-cli`](https://github.com/sivel/speedtest-cli) or [`librespeed-cli`](https://github.com/librespeed/speedtest-cli) installed as `/usr/bin/speedtest`. You can install and switch between all of these with the Mod Script's `-s` option. Please refer to our [wiki](https://github.com/arevindh/pihole-speedtest/wiki) to see how to use this option and what others are available. Should any of the CLI packages fail at runtime, the others will be tried.
 
 Further Instructions: [Updating](https://github.com/arevindh/pihole-speedtest/wiki/Updating-Speedtest-Mod) | [Uninstalling](https://github.com/arevindh/pihole-speedtest/wiki/Uninstalling-Speedtest-Mod)
 
